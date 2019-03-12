@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+table.blueTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+table.blueTable tbody td {
+  font-size: 15px;
+}
+table.blueTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.blueTable thead {
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  border-bottom: 2px solid #444444;
+}
+table.blueTable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #D0E4F5;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+</style>
+</head>
+<body>
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'HM')" id="defaultOpen">HeatMap</button>
+  <button class="tablinks" onclick="openCity(event, '1DP')">1D plots</button>
+  <button class="tablinks" onclick="openCity(event, '2DP')">2D plots</button>
+  <button class="tablinks" onclick="openCity(event, 'TA')">Time & Alarms</button>
+</div>
+
+
+<div id="HM" class="tabcontent">
+	<img id="HMimage" src="images/HM_ALARMS.png" />
+</div>
+
+<div id="1DP" class="tabcontent">
+	<h1>
+		Histograms and density estimations for: <i>going to normal</i>
+	</h1><br>
+	<img id="TNmeanimage" src="images/1D_TN_MEAN.png" /><br>
+	<img id="TNmedianimage" src="images/1D_TN_MEDIAN.png" /><br>
+	<img id="TNstdimage" src="images/1D_TN_STD.png" /><br>
+	<h1>
+		Histograms and density estimations for: <i>going to reverse</i>
+	</h1><br>
+	<img id="TRmeanimage" src="images/1D_TR_MEAN.png" /><br>
+	<img id="TRmedianimage" src="images/1D_TR_MEDIAN.png" /><br>
+	<img id="TRstdimage" src="images/1D_TR_STD.png" /><br>
+	<h1>
+		Histograms and density estimations for: <i>going to normal/reverse</i>
+	</h1><br>
+	<img id="TBmeanimage" src="images/1D_TB_MEAN.png" /><br>
+	<img id="TBmedianimage" src="images/1D_TB_MEDIAN.png" /><br>
+	<img id="TBstdimage" src="images/1D_TB_STD.png" /><br>
+</div>
+
+<div id="2DP" class="tabcontent">
+	<iframe src="sp.html" width="100%" height="700" frameborder="0">
+		<p>Your browser does not support iframes.</p>
+	</iframe>
+	<!--
+	<img id="TNMMSimage" src="images/TN_PCA_KMEANS_K3_MMS.png" />
+	<img id="TNSWimage" src="images/TN_PCA_KMEANS_K3_SW.png" />
+	<img id="TRMMSimage" src="images/TR_PCA_KMEANS_K3_MMS.png" />
+	<img id="TRSWimage" src="images/TR_PCA_KMEANS_K3_SW.png" />
+	<img id="TBMMSimage" src="images/TB_PCA_KMEANS_K3_MMS.png" />
+	<img id="TBSWimage" src="images/TN_PCA_KMEANS_K3_SW.png" />
+	-->
+</div>
+
+<div id="TA" class="tabcontent">
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Select Railway Point:  
+	<select id="dlist" onChange="swapImage()">
+	<option value="198">Strathfield:ST535</option>
+	<option value="278">Sydney:SY627</option>
+	<option value="244">Sydney:SY203</option>
+	<option value="242">Sydney:SY200</option>
+	<option value="113">Lidcombe:ST654</option>
+	<option value="166">NorthShore:GN51</option>
+	<option value="272">Sydney:SY621</option>
+	<option value="336">Lidcombe:ST644</option>
+	<option value="101">Lidcombe:ST634</option>
+	<option value="124">Lidcombe:ST690</option>
+	<option value="107">Lidcombe:ST641</option>
+	<option value="133">Lidcombe:ST702</option>
+	<option value="255">Sydney:SY241</option>
+	<option value="337">Lidcombe:ST649</option>
+	<option value="310">Sydney:SY670</option>
+	<option value="150">Lidcombe:ST871</option>
+	<option value="35">Hornsby:B51</option>
+	<option value="172">NorthSydney:NS600</option>
+	<option value="245">Sydney:SY204</option>
+	<option value="132">Lidcombe:ST701</option>
+	<option value="109">Lidcombe:ST647</option>
+	<option value="203">Strathfield:ST541</option>
+	<option value="281">Sydney:SY630</option>
+	<option value="114">Lidcombe:ST655</option>
+	<option value="134">Lidcombe:ST703</option>
+	<option value="156">Mountains:LN120</option>
+	<option value="174">NorthSydney:NS602</option>
+	<option value="327">Sydney:SY612</option>
+	<option value="173">NorthSydney:NS601</option>
+	<option value="164">Mountains:SD118</option>
+	<option value="15">Granville:GE710</option>
+	<option value="330">Lidcombe:ST692</option>
+	<option value="307">Sydney:SY667</option>
+	<option value="148">Lidcombe:ST863</option>
+	<option value="308">Sydney:SY668</option>
+	<option value="165">NorthShore:GN50</option>
+	<option value="127">Lidcombe:ST695</option>
+	<option value="163">Mountains:SD117</option>
+	<option value="309">Sydney:SY669</option>
+	<option value="238">Sydney:SY193</option>
+	<option value="346">Hornsby:HR201</option>
+	<option value="170">NorthShore:LD21</option>
+	<option value="40">Hornsby:HR200</option>
+	<option value="202">Strathfield:ST539</option>
+	<option value="155">Mountains:LN119</option>
+	<option value="279">Sydney:SY628</option>
+	<option value="144">Lidcombe:ST720</option>
+	<option value="146">Lidcombe:ST861</option>
+	<option value="13">Granville:GE708</option>
+	<option value="168">NorthShore:GN53</option>
+	<option value="11">Granville:GE705</option>
+	<option value="341">Hornsby:HR210</option>
+	<option value="339">Sydney:SY195</option>
+	<option value="200">Strathfield:ST537</option>
+	<option value="249">Sydney:SY235</option>
+	<option value="106">Lidcombe:ST640</option>
+	<option value="117">Lidcombe:ST658</option>
+	<option value="169">NorthShore:LD20</option>
+	<option value="167">NorthShore:GN52</option>
+	<option value="300">Sydney:SY660</option>
+	<option value="332">Lidcombe:AN605</option>
+	<option value="171">NorthSydney:NS599</option>
+	<option value="54">Hornsby:HY523</option>
+	<option value="176">NorthSydney:NS604</option>
+	<option value="322">Mountains:SD113</option>
+	<option value="157">Mountains:LN124</option>
+	<option value="46">Hornsby:HY502</option>
+	<option value="103">Lidcombe:ST637</option>
+	<option value="140">Lidcombe:ST716</option>
+	<option value="147">Lidcombe:ST862</option>
+	<option value="8">Granville:GE700</option>
+	<option value="345">Sydney:SY223</option>
+	<option value="215">Strathfield:ST613</option>
+	<option value="137">Lidcombe:ST709</option>
+	<option value="195">Strathfield:ST529</option>
+	<option value="243">Sydney:SY202</option>
+	<option value="125">Lidcombe:ST693</option>
+	<option value="239">Sydney:SY194</option>
+	<option value="110">Lidcombe:ST651</option>
+	<option value="196">Strathfield:ST530</option>
+	<option value="141">Lidcombe:ST717</option>
+	<option value="142">Lidcombe:ST718</option>
+	<option value="120">Lidcombe:ST665</option>
+	<option value="126">Lidcombe:ST694</option>
+	<option value="237">Sydney:SY192</option>
+	<option value="115">Lidcombe:ST656</option>
+	<option value="175">NorthSydney:NS603</option>
+	<option value="82">Lidcombe:AN608</option>
+	<option value="335">Hornsby:HR203</option>
+	<option value="321">Mountains:SD104</option>
+	<option value="320">Lidcombe:AN637</option>
+	<option value="315">Hornsby:HY543</option>
+	<option value="36">Hornsby:B52</option>
+	<option value="37">Hornsby:B53</option>
+	<option value="305">Sydney:SY665</option>
+	<option value="246">Sydney:SY211</option>
+	<option value="53">Hornsby:HY521</option>
+	<option value="284">Sydney:SY633</option>
+	<option value="280">Sydney:SY629</option>
+	<option value="59">Hornsby:HY530</option>
+	<option value="61">Hornsby:HY533</option>
+	<option value="268">Sydney:SY617</option>
+	<option value="68">Hornsby:HY540</option>
+	<option value="52">Hornsby:HY520</option>
+	<option value="253">Sydney:SY239</option>
+	<option value="252">Sydney:SY238</option>
+	<option value="77">Hornsby:HY573</option>
+	<option value="259">Sydney:SY247</option>
+	<option value="251">Sydney:SY237</option>
+	<option value="258">Sydney:SY244</option>
+	<option value="257">Sydney:SY243</option>
+	<option value="254">Sydney:SY240</option>
+	<option value="136">Lidcombe:ST708</option>
+	<option value="22">Granville:GE717</option>
+	<option value="119">Lidcombe:ST664</option>
+	<option value="31">Granville:GE750</option>
+	<option value="149">Lidcombe:ST870</option>
+	<option value="342">Lidcombe:ST689</option>
+	<option value="264">Sydney:SY265</option>
+	<option value="162">Mountains:SD102</option>
+	<option value="151">Mountains:KT101</option>
+	<option value="210">Strathfield:ST600</option>
+	<option value="6">Granville:CL661</option>
+	<option value="250">Sydney:SY236</option>
+	<option value="10">Granville:GE702</option>
+	<option value="21">Granville:GE716</option>
+	<option value="17">Granville:GE712</option>
+	<option value="16">Granville:GE711</option>
+	<option value="12">Granville:GE706</option>
+	<option value="14">Granville:GE709</option>
+	<option value="329">Hornsby:HY6B</option>
+	<option value="326">Sydney:SY250</option>
+	<option value="325">Strathfield:ST584</option>
+	<option value="338">Lidcombe:ST650</option>
+	<option value="241">Sydney:SY198</option>
+	<option value="261">Sydney:SY258</option>
+	<option value="236">Sydney:SY184</option>
+	<option value="263">Sydney:SY264</option>
+	<option value="194">Strathfield:ST528</option>
+	<option value="266">Sydney:SY615</option>
+	<option value="191">Strathfield:EW102</option>
+	<option value="188">Strathfield:EG108</option>
+	<option value="256">Sydney:SY242</option>
+	<option value="187">Strathfield:EG107</option>
+	<option value="185">Strathfield:EG105</option>
+	<option value="289">Sydney:SY643</option>
+	<option value="290">Sydney:SY644</option>
+	<option value="298">Sydney:SY658</option>
+	<option value="299">Sydney:SY659</option>
+	<option value="304">Sydney:SY664</option>
+	<option value="223">Strathfield:WR101</option>
+	<option value="312">Sydney:SY850</option>
+	<option value="313">Hornsby:C66</option>
+	<option value="262">Sydney:SY260</option>
+	<option value="317">Hornsby:HY552</option>
+	<option value="233">Sydney:SY174</option>
+	<option value="350">Strathfield:EG113</option>
+	<option value="48">Hornsby:HY515</option>
+	<option value="38">Hornsby:C60</option>
+	<option value="42">Hornsby:HR207</option>
+	<option value="108">Lidcombe:ST646</option>
+	<option value="104">Lidcombe:ST638</option>
+	<option value="44">Hornsby:HY500</option>
+	<option value="49">Hornsby:HY516</option>
+	<option value="56">Hornsby:HY527</option>
+	<option value="95">Lidcombe:AN638</option>
+	<option value="63">Hornsby:HY535</option>
+	<option value="64">Hornsby:HY536</option>
+	<option value="92">Lidcombe:AN633</option>
+	<option value="91">Lidcombe:AN632</option>
+	<option value="65">Hornsby:HY537</option>
+	<option value="89">Lidcombe:AN630</option>
+	<option value="88">Lidcombe:AN629</option>
+	<option value="66">Hornsby:HY538</option>
+	<option value="67">Hornsby:HY539</option>
+	<option value="85">Lidcombe:AN625</option>
+	<option value="69">Hornsby:HY541</option>
+	<option value="70">Hornsby:HY542</option>
+	<option value="83">Lidcombe:AN609</option>
+	<option value="112">Lidcombe:ST653</option>
+	<option value="116">Lidcombe:ST657</option>
+	<option value="73">Hornsby:HY569</option>
+	<option value="143">Lidcombe:ST719</option>
+	<option value="128">Lidcombe:ST696</option>
+	<option value="138">Lidcombe:ST713</option>
+	<option value="30">Granville:GE730</option>
+	<option value="135">Lidcombe:ST704</option>
+	<option value="129">Lidcombe:ST697</option>
+	<option value="226">Sydney:SY156</option>
+	<option value="154">Mountains:KT107</option>
+	<option value="122">Lidcombe:ST687</option>
+	<option value="287">Sydney:SY641</option>
+	<option value="139">Lidcombe:ST714</option>
+	<option value="23">Granville:GE720</option>
+	<option value="217">Strathfield:ST617</option>
+	<option value="218">Strathfield:ST618</option>
+	<option value="123">Lidcombe:ST688</option>
+	<option value="50">Hornsby:HY517</option>
+	<option value="296">Sydney:SY656</option>
+	<option value="205">Strathfield:ST553</option>
+	<option value="102">Lidcombe:ST635</option>
+	<option value="81">Lidcombe:AN604</option>
+	<option value="121">Lidcombe:ST686</option>
+	<option value="190">Strathfield:EG114</option>
+	<option value="29">Granville:GE729</option>
+	<option value="27">Granville:GE727</option>
+	<option value="208">Strathfield:ST565</option>
+	<option value="248">Sydney:SY234</option>
+	<option value="207">Strathfield:ST563</option>
+	<option value="72">Hornsby:HY564</option>
+	<option value="344">Sydney:SY163</option>
+	<option value="20">Granville:GE715</option>
+	<option value="18">Granville:GE713</option>
+	<option value="9">Granville:GE701</option>
+	<option value="71">Hornsby:HY544</option>
+	<option value="276">Sydney:SY625</option>
+	<option value="274">Sydney:SY623</option>
+	<option value="60">Hornsby:HY531</option>
+	<option value="273">Sydney:SY622</option>
+	<option value="269">Sydney:SY618</option>
+	<option value="271">Sydney:SY620</option>
+	<option value="348">Mountains:KT106</option>
+	<option value="3">Ashfield:ST522</option>
+	<option value="343">Sydney:SY154</option>
+	<option value="265">Sydney:SY266</option>
+	<option value="260">Sydney:SY249</option>
+	<option value="58">Hornsby:HY529</option>
+	<option value="319">Lidcombe:AN634</option>
+	<option value="282">Sydney:SY631</option>
+	<option value="318">Hornsby:HY560</option>
+	<option value="316">Hornsby:HY551</option>
+	<option value="314">Hornsby:HR202</option>
+	<option value="324">Strathfield:RS52</option>
+	<option value="311">Sydney:SY671</option>
+	<option value="41">Hornsby:HR204</option>
+	<option value="25">Granville:GE722</option>
+	<option value="24">Granville:GE721</option>
+	<option value="43">Hornsby:HR208</option>
+	<option value="331">Lidcombe:AN603</option>
+	<option value="306">Sydney:SY666</option>
+	<option value="57">Hornsby:HY528</option>
+	<option value="45">Hornsby:HY501</option>
+	<option value="303">Sydney:SY663</option>
+	<option value="302">Sydney:SY662</option>
+	<option value="301">Sydney:SY661</option>
+	<option value="294">Sydney:SY654</option>
+	<option value="292">Sydney:SY649</option>
+	<option value="51">Hornsby:HY518</option>
+	<option value="55">Hornsby:HY526</option>
+	<option value="288">Sydney:SY642</option>
+	<option value="286">Sydney:SY636</option>
+	<option value="285">Sydney:SY635</option>
+	<option value="283">Sydney:SY632</option>
+	<option value="47">Hornsby:HY508</option>
+	<option value="158">Mountains:NJ102</option>
+	<option value="76">Hornsby:HY572</option>
+	<option value="75">Hornsby:HY571</option>
+	<option value="216">Strathfield:ST616</option>
+	<option value="96">Lidcombe:ST625</option>
+	<option value="214">Strathfield:ST604</option>
+	<option value="213">Strathfield:ST603</option>
+	<option value="212">Strathfield:ST602</option>
+	<option value="211">Strathfield:ST601</option>
+	<option value="206">Strathfield:ST557</option>
+	<option value="74">Hornsby:HY570</option>
+	<option value="201">Strathfield:ST538</option>
+	<option value="199">Strathfield:ST536</option>
+	<option value="197">Strathfield:ST532</option>
+	<option value="219">Strathfield:ST619</option>
+	<option value="105">Lidcombe:ST639</option>
+	<option value="189">Strathfield:EG109</option>
+	<option value="186">Strathfield:EG106</option>
+	<option value="118">Lidcombe:ST659</option>
+	<option value="182">NorthSydney:NS610</option>
+	<option value="180">NorthSydney:NS608</option>
+	<option value="177">NorthSydney:NS605</option>
+	<option value="349">Sydney:SY673</option>
+	<option value="152">Mountains:KT102</option>
+	<option value="153">Mountains:KT105</option>
+	<option value="160">Mountains:NJ106</option>
+	<option value="159">Mountains:NJ103</option>
+	<option value="111">Lidcombe:ST652</option>
+	<option value="220">Strathfield:TH51</option>
+	<option value="99">Lidcombe:ST632</option>
+	<option value="231">Sydney:SY162</option>
+	<option value="93">Lidcombe:AN635</option>
+	<option value="235">Sydney:SY183</option>
+	<option value="84">Lidcombe:AN624</option>
+	<option value="234">Sydney:SY182</option>
+	<option value="94">Lidcombe:AN636</option>
+	<option value="232">Sydney:SY166</option>
+	<option value="240">Sydney:SY197</option>
+	<option value="247">Sydney:SY224</option>
+	<option value="230">Sydney:SY161</option>
+	<option value="87">Lidcombe:AN628</option>
+	<option value="80">Lidcombe:AN602</option>
+	<option value="229">Sydney:SY160</option>
+	<option value="78">Hornsby:HY574</option>
+	<option value="227">Sydney:SY157</option>
+	<option value="33">Granville:GE756</option>
+	<option value="145">Lidcombe:ST721</option>
+	<option value="328">Granville:GE726</option>
+	<option value="34">Granville:GE757</option>
+	<option value="267">Sydney:SY616</option>
+	<option value="79">Hornsby:HY7B</option>
+	<option value="28">Granville:GE728</option>
+	<option value="179">NorthSydney:NS607</option>
+	<option value="26">Granville:GE725</option>
+	<option value="178">NorthSydney:NS606</option>
+	<option value="86">Lidcombe:AN626</option>
+	<option value="4">Granville:AY683</option>
+	<option value="5">Granville:CL660</option>
+	<option value="333">Sydney:SY647</option>
+	<option value="2">Ashfield:ST521</option>
+	<option value="334">Hornsby:C63</option>
+	<option value="161">Mountains:RH50</option>
+	<option value="131">Lidcombe:ST700</option>
+	<option value="19">Granville:GE714</option>
+	<option value="7">Granville:CL667</option>
+	<option value="340">Granville:GE758</option>
+	<option value="347">Strathfield:ST554</option>
+	<option value="130">Lidcombe:ST699</option>
+	<option value="221">Strathfield:TH52</option>
+	<option value="181">NorthSydney:NS609</option>
+	<option value="224">Strathfield:WR123</option>
+	<option value="225">Sydney:SY152</option>
+	<option value="228">Sydney:SY158</option>
+	<option value="291">Sydney:SY648</option>
+	<option value="62">Hornsby:HY534</option>
+	<option value="293">Sydney:SY653</option>
+	<option value="277">Sydney:SY626</option>
+	<option value="295">Sydney:SY655</option>
+	<option value="297">Sydney:SY657</option>
+	<option value="97">Lidcombe:ST630</option>
+	<option value="209">Strathfield:ST581</option>
+	<option value="323">Strathfield:RS51</option>
+	<option value="275">Sydney:SY624</option>
+	<option value="98">Lidcombe:ST631</option>
+	<option value="100">Lidcombe:ST633</option>
+	<option value="270">Sydney:SY619</option>
+	<option value="193">Strathfield:RS53</option>
+	<option value="192">Strathfield:RS50</option>
+	<option value="39">Hornsby:C64</option>
+	<option value="90">Lidcombe:AN631</option>
+	<option value="222">Strathfield:TH55</option>
+	<option value="184">Strathfield:EG104</option>
+	<option value="183">Strathfield:EG103</option>
+	<option value="32">Granville:GE751</option>
+	<option value="204">Strathfield:ST550</option>
+	<option value="1">Ashfield:ST520</option>
+	</select>
+
+	<table>
+	<tr>
+	<td>
+	<iframe src="t2.html" width="1050" height="700" frameborder="0" id="iframeTA">
+		<p>Your browser does not support iframes.</p>
+	</iframe>
+	</td>
+	<!--
+	<td><img id="imageToSwap" src="images/RP_198" /></td>
+	-->
+	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	<td>
+		<table class="blueTable">
+		<thead>
+		<tr>
+		<th>Operation<br>mean time</th>
+		<th>Operation<br>median time</th>
+		<th>Operation<br>std dev</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td id="td1">2.776</td>
+		<td id="td2">3</td>
+		<td id="td3">1.514</td>
+		</tr>
+		</tbody>
+		</table>
+		<br><br>
+		<table class="blueTable">
+		<thead>
+		<tr>
+		<th>No of operations</th>
+		<th>No of alarms</th>
+		<th>No of failures</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td id="td4">1789</td>
+		<td id="td5">964</td>
+		<td id="td6">1802</td>
+		</tr>
+		</tbody>
+		</table>
+	</td>
+	</tr>
+	<tr>
+	</tr>
+	</table>
+</div>
+
+<script>
+no_alarms = [964, 69, 65, 58, 51, 47, 44, 44, 40, 39, 38, 38, 37, 37, 36, 33, 31, 31, 31, 29, 29, 28, 28, 28, 27, 27, 26, 24, 24, 24, 23, 23, 23, 22, 22, 21, 21, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 14, 14, 14, 13, 13, 13, 13, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 10, 10, 10, 10, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+no_failures = [1802, 68, 110, 63, 29, 47, 28, 36, 34, 30, 30, 46, 20, 28, 20, 26, 24, 20, 21, 28, 18, 14, 14, 14, 22, 17, 199, 12, 13, 16, 28, 15, 12, 17, 12, 15, 17, 13, 10, 10, 16, 10, 10, 11, 12, 12, 20, 13, 21, 21, 18, 11, 8, 8, 8, 12, 8, 8, 10, 18, 8, 10, 9, 119, 12, 9, 18, 13, 15, 10, 12, 14, 11, 8, 14, 165, 14, 11, 6, 6, 12, 7, 6, 30, 6, 17, 62, 9, 6, 10, 6, 6, 7, 8, 6, 12, 8, 6, 6, 8, 7, 6, 8, 6, 6, 6, 41, 6, 11, 16, 6, 6, 12, 10, 6, 10, 8, 9, 8, 9, 18, 11, 16, 14, 10, 8, 14, 15, 10, 10, 8, 4, 8, 4, 15, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 8, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 7, 4, 4, 4, 4, 4, 7, 4, 7, 4, 21, 5, 4, 4, 5, 6, 4, 5, 5, 8, 4, 5, 6, 6, 4, 4, 10, 10, 6, 8, 8, 18, 4, 6, 6, 7, 6, 6, 4, 8, 5, 4, 7, 7, 6, 4, 5, 4, 6, 4, 5, 8, 6, 5, 3, 4, 6, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+no_sw = [1789, 1094, 232, 220, 239, 1338, 78, 151, 592, 2901, 191, 838, 952, 60, 489, 333, 1137, 149, 573, 569, 65, 1689, 120, 335, 83, 23, 230, 192, 324, 23, 2035, 20, 463, 25, 224, 1250, 553, 126, 554, 346, 16, 720, 9, 176, 30, 478, 197, 181, 2382, 933, 472, 20, 13, 156, 1266, 216, 277, 722, 1132, 265, 120, 33, 982, 107, 30, 28, 223, 110, 130, 200, 153, 11, 396, 1727, 79, 830, 177, 834, 228, 1218, 225, 235, 112, 172, 708, 469, 180, 377, 4, 32, 12, 32, 1076, 955, 166, 205, 798, 619, 555, 460, 433, 61, 198, 630, 873, 435, 46, 1458, 415, 668, 472, 613, 181, 903, 157, 64, 312, 11, 921, 56, 130, 1485, 72, 121, 178, 919, 134, 141, 151, 1923, 11, 10, 5, 136, 818, 45, 60, 718, 79, 34, 23, 43, 615, 576, 121, 145, 91, 348, 451, 149, 1021, 346, 17, 59, 29, 79, 2, 537, 129, 4, 283, 115, 1475, 147, 638, 137, 160, 161, 162, 144, 109, 333, 95, 77, 72, 39, 913, 1102, 239, 708, 230, 156, 189, 185, 376, 1292, 94, 146, 418, 48, 299, 254, 191, 932, 198, 874, 294, 647, 71, 710, 401, 119, 19, 637, 226, 213, 68, 392, 145, 982, 28, 888, 136, 170, 179, 206, 105, 277, 129, 44, 2364, 1, 207, 11, 552, 895, 108, 28, 246, 67, 15, 7, 38, 68, 26, 1030, 61, 26, 113, 53, 539, 1231, 127, 77, 537, 177, 570, 631, 658, 130, 171, 48, 626, 124, 28, 186, 121, 325, 230, 979, 992, 979, 1195, 297, 141, 320, 233, 1799, 146, 234, 894, 576, 92, 37, 551, 315, 5, 45, 88, 28, 53, 370, 40, 265, 171, 155, 639, 38, 911, 224, 434, 467, 531, 146, 43, 105, 529, 1052, 462, 899, 124, 6, 891, 33, 290, 1312, 163, 624, 314, 38, 543, 70, 8, 130, 12, 126, 246, 129, 61, 13, 7, 263, 741, 288, 1172, 387, 264, 517, 424, 573, 1949, 45, 79, 154, 142, 35, 155, 158, 156, 39, 590, 341, 139, 164, 39, 629, 803, 128, 1534, 124];
+
+mean_t = [2.776, 3.007, 3.103, 2.309, 1.51 , 32.743, 2.859, 11.073, 2.78 , 4.656, 11.822, 4.704, 3.585, 6.033, 2.483, 5.856, 4.303, 6.564, 2.771, 4.592, 6.262, 2.306, 2.475, 1.337, 4.819, 6.565, 11.548, 2.458, 6.559, 6.696, 6.405, 5.75 , 2.769, 6, 3.366, 7.457, 4.533, 6.738, 2.874, 2.48 , 6.875, 6.896, 6.556, 3.108, 6.467, 3.159, 4.909, 5.895, 6.636, 7.555, 5.877, 7.2 , 4.846, 3.564, 4.886, 10.736, 2.39 , 6.954, 7.87 , 1.883, 7.917, 6.576, 4.622, 6.57 , 6.767, 6.393, 7.197, 9.845, 5.023, 5.535, 6.817, 7.545, 2.975, 4.376, 5.772, 2.107, 3.373, 2.983, 1.987, 2.554, 4.573, 4.179, 4.536, 3.395, 3.322, 1.512, 9.706, 6.387, 7.5 , 6.75 , 7.333, 6.375, 4.266, 4.361, 2.301, 3.8 , 4.6 , 2.326, 2.256, 4.665, 3.695, 2.836, 7.621, 6.059, 4.561, 3.717, 6.239, 3.353, 3.405, 2.409, 3.525, 4.163, 4.365, 6.803, 4.535, 6.516, 5.506, 5.818, 2.921, 6.768, 6.277, 2.564, 6.125, 5.107, 9.466, 6.498, 16.754, 6.645, 5.854, 6.636, 6.455, 2.9 , 6, 5.449, 2.568, 5.4 , 4.1 , 3.331, 8.278, 3.088, 6.609, 12.558, 3.153, 12.569, 12.702, 3.855, 3.505, 4.905, 7.06 , 2.047, 4.317, 4.616, 5.941, 2.678, 6.379, 5.557, 12.5 , 3.803, 4.419, 8, 6.657, 6.157, 6.046, 3.925, 6.487, 4.942, 6.087, 6.019, 5.364, 5.5 , 5.982, 4.694, 5.379, 6.039, 5.958, 6.949, 6.916, 7.218, 6.029, 2.25 , 2.717, 7.192, 4.677, 4.649, 4.747, 5.529, 4.777, 4.507, 3.16 , 6.396, 4.709, 3.173, 4.429, 5.344, 2.798, 4.037, 4.503, 3.802, 3.197, 4.838, 4.127, 6.706, 4.526, 12.458, 5.602, 5.347, 3.985, 4.181, 4.2 , 6.943, 3.643, 6.519, 6.522, 6.771, 4.313, 2.869, 2.467, 3.819, 2.341, 2.795, 2.19 , 6, 2.995, 2.636, 2.683, 4.256, 4.667, 4.429, 2.484, 7.164, 6.733, 7.429, 4.658, 3.368, 6.346, 5.432, 5.41 , 6.038, 4.761, 2.245, 4.651, 6.869, 1.921, 2.883, 2.289, 2.107, 2.912, 3.794, 4.673, 3.377, 3.462, 2.159, 2.381, 6.919, 6.107, 6.366, 6.008, 2.462, 2.861, 3.312, 3.239, 2.874, 2.669, 4.7 , 6.369, 2.7 , 2.665, 2.829, 3.644, 7.868, 12.488, 12.63 , 2.543, 6.649, 3.312, 2.473, 2.8 , 6.089, 6.33 , 6.107, 6.151, 1.141, 4.525, 3.642, 3.906, 4.394, 3.79 , 6.263, 4.182, 4.183, 3.378, 3.441, 2.004, 2.432, 4.651, 4.714, 3.064, 6.394, 2.552, 6.691, 4.5 , 4.167, 6.646, 2.606, 6.755, 5.496, 2.626, 5.38 , 2.481, 4.263, 3.785, 7.843, 2.75 , 2.791, 4.667, 5.937, 3.488, 6.612, 5.705, 6.692, 4.714, 2.863, 4.896, 4.76 , 5.799, 2.545, 2.806, 2.888, 4.318, 2.923, 3.53 , 2.467, 3.051, 3.292, 5.852, 5.486, 2.161, 4.158, 4.096, 4.154, 5.625, 4.548, 4.799, 6.006, 4.564, 12.668, 12.828, 6.805, 4.678, 2.798]; 
+
+median_t = [3, 3, 3, 2, 2, 7, 3, 11, 3, 5, 12, 5, 4, 6, 2, 6, 4, 7, 3, 5, 6, 2, 2, 1, 5, 7, 7, 2, 7, 7, 6, 5, 3, 5, 3, 7, 4, 7, 3, 2, 7, 7, 7, 3, 6, 3, 5, 6, 7, 7, 6, 7, 5, 4, 5, 11, 2, 7, 8, 2, 8, 7, 5, 7, 7, 6, 7, 10, 5, 6, 7, 5, 3, 4, 6, 2, 3, 3, 2, 3, 5, 4, 5, 3, 3, 2, 10, 6, 7.5, 7, 7, 6, 4, 4, 2, 4, 5, 2, 2, 5, 4, 3, 7, 6, 5, 4, 6, 3, 3, 2, 4, 4, 4, 6, 4, 7, 5, 4, 3, 7, 6, 3, 6, 5, 6, 6, 7, 7, 6, 7, 6, 3, 6, 5, 3, 5, 4, 3, 8, 3, 7, 13, 3, 13, 13, 4, 4, 5, 7, 2, 4, 5, 6, 3, 6, 6, 12.5, 4, 4, 8, 7, 6, 6, 4, 7, 5, 6, 6, 5, 5.5, 6, 5, 5, 6, 6, 6, 7, 7, 6, 2, 3, 7, 5, 5, 5, 6, 5, 5, 3, 6, 5, 3, 4, 5, 3, 4, 5, 4, 3, 5, 4, 7, 5, 12, 6, 5, 4, 4, 4, 6, 4, 7, 7, 7, 4, 3, 2, 4, 2, 3, 2, 6, 3, 3, 3, 4, 5, 4, 2, 7, 7, 7, 5, 3, 6, 5, 5, 6, 5, 2, 5, 7, 2, 3, 2, 2, 3, 4, 5, 3, 3, 2, 2, 7, 6, 6, 6, 2, 3, 3, 3, 3, 3, 5, 6, 3, 3, 3, 4, 8, 12, 12, 3, 7, 3, 2, 3, 6, 6, 6, 6, 1, 5, 4, 4, 4, 4, 6, 4, 4, 3, 3, 2, 2, 5, 5, 3, 6, 3, 7, 4.5, 4, 7, 3, 7, 5, 3, 5, 2, 4, 4, 8, 3, 3, 5, 6, 3, 7, 6, 7, 5, 3, 5, 5, 6, 3, 3, 3, 4, 3, 4, 2, 3, 3, 6, 5, 2, 4, 4, 4, 6, 5, 5, 6, 5, 13, 13, 7, 5, 3]; 
+
+std_t = [1.514, 7.125, 2.845, 5.754, 0.5 , 938.062, 0.445, 0.642, 0.725, 0.475, 0.48 , 0.456, 0.493, 0.314, 0.5 , 0.414, 0.459, 0.496, 0.42 , 0.491, 0.473, 0.759, 0.499, 0.473, 1.851, 0.496, 74.903, 0.498, 0.538, 0.46 , 0.511, 5.356, 0.422, 3.111, 0.482, 0.563, 0.933, 0.44 , 0.332, 0.5 , 0.484, 0.344, 0.497, 0.345, 0.499, 0.366, 3.041, 0.427, 0.5 , 16.103, 0.341, 0.6 , 0.361, 0.496, 0.33 , 0.623, 0.488, 0.364, 0.435, 0.333, 0.42 , 0.494, 0.485, 0.495, 0.423, 0.488, 0.43 , 0.621, 2.816, 0.547, 0.477, 8.106, 0.283, 0.484, 0.502, 0.313, 0.484, 0.259, 0.288, 0.497, 0.495, 0.383, 0.516, 0.489, 0.467, 0.5 , 0.794, 0.493, 0.5 , 0.433, 0.471, 0.484, 0.444, 0.48 , 0.459, 0.4 , 0.49 , 0.469, 0.436, 0.476, 0.47 , 0.37 , 6.241, 0.496, 0.496, 0.45 , 0.519, 0.478, 0.491, 0.492, 0.499, 0.387, 0.481, 9.276, 3.284, 0.5 , 1.587, 4.509, 0.308, 0.422, 0.447, 0.496, 0.47 , 0.31 , 40.181, 0.5 , 117.429, 0.478, 0.353, 0.504, 0.498, 0.3 , 0, 0.497, 0.495, 0.49 , 0.3 , 0.471, 0.448, 0.284, 0.488, 0.497, 0.36 , 0.594, 0.57 , 2.969, 0.5 , 0.312, 0.381, 0.241, 0.465, 0.486, 0.235, 0.467, 0.611, 0.522, 0.5 , 0.403, 0.493, 0, 0.594, 0.693, 0.512, 0.468, 0.605, 0.314, 0.492, 0.528, 0.481, 0.5 , 0.358, 1.113, 0.485, 0.521, 0.455, 3.289, 0.578, 0.428, 1.201, 0.433, 0.45 , 0.44 , 1.983, 0.477, 0.435, 0.499, 2.053, 0.5 , 1.482, 0.489, 1.378, 0.378, 0.495, 0.48 , 0.402, 0.326, 0.5 , 0.402, 0.398, 0.983, 0.369, 0.54 , 0.499, 0.558, 0.49 , 0.532, 1.883, 1.357, 0.449, 15.242, 0.479, 0.5 , 0.514, 0.543, 0.498, 0.352, 0.499, 0.394, 0.474, 0.403, 0.393, 0, 0.347, 0.481, 0.465, 0.436, 0.471, 0.495, 0.5 , 0.37 , 0.573, 0.495, 0.474, 0.482, 0.551, 0.507, 0.492, 0.437, 0.447, 0.43 , 0.484, 0.468, 0.269, 0.321, 0.453, 0.327, 0.334, 0.408, 0.469, 0.485, 1.534, 0.737, 2.791, 0.502, 0.309, 0.573, 0.472, 0.499, 0.346, 0.478, 0.431, 0.335, 0.471, 0.458, 0.482, 0.458, 0.472, 0.402, 0.479, 0.351, 0.551, 3.65 , 0.498, 0.625, 0.471, 0.499, 0.4 , 0.285, 0.47 , 0.409, 0.358, 0.37 , 0.499, 0.48 , 0.408, 0.489, 0.407, 0.44 , 0.392, 0.398, 0.485, 0.497, 0.384, 0.495, 0.477, 0.452, 0.443, 0.495, 0.497, 0.462, 0.5 , 0.373, 0.478, 0.489, 0.446, 0.503, 0.597, 0.492, 0.5 , 0.44 , 0.441, 0.749, 0.433, 1.097, 0.471, 0.327, 0.5 , 0.487, 0.456, 0.462, 0.452, 0.344, 0.31 , 0.466, 0.401, 0.498, 0.532, 0.333, 0.476, 0.303, 0.499, 0.499, 0.271, 0.455, 0.355, 0.5 , 0.368, 0.398, 0.389, 0.361, 0.484, 0.498, 0.401, 0.374, 0.496, 0.563, 0.587, 0.531, 0.469, 0.401]; 
+
+
+function swapImage(){
+	//var image = document.getElementById("imageToSwap");
+	var dropd = document.getElementById("dlist");
+	//image.src = "images/"+dropd.value;
+    document.getElementById('td1').innerHTML = mean_t[dropd.selectedIndex];
+    document.getElementById('td2').innerHTML = median_t[dropd.selectedIndex];
+    document.getElementById('td3').innerHTML = std_t[dropd.selectedIndex];
+    document.getElementById('td4').innerHTML = no_sw[dropd.selectedIndex];
+    document.getElementById('td5').innerHTML = no_alarms[dropd.selectedIndex];
+    document.getElementById('td6').innerHTML = no_failures[dropd.selectedIndex];
+    document.getElementById('iframeTA').src = dropd.value + ".html";
+};
+
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+document.getElementById("defaultOpen").click();
+
+$(document).ready(function(){
+    $("#dlist").change(function(){
+        $("#iframeTA").attr("src", "i"+$(this).val()+".html");
+    });
+});
+
+</script>
+
+</body>
+</html> 
