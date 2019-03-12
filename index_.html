@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+table.blueTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+table.blueTable tbody td {
+  font-size: 15px;
+}
+table.blueTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.blueTable thead {
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  border-bottom: 2px solid #444444;
+}
+table.blueTable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #D0E4F5;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+</style>
+</head>
+<body>
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'HM')" id="defaultOpen">HeatMap</button>
+  <button class="tablinks" onclick="openCity(event, '1DP')">1D plots</button>
+  <button class="tablinks" onclick="openCity(event, '2DP')">2D plots</button>
+  <button class="tablinks" onclick="openCity(event, 'TA')">Time & Alarms</button>
+  <button class="tablinks" onclick="openCity(event, 'TW')">T&A windows</button>
+</div>
+
+
+<div id="HM" class="tabcontent">
+	<img id="HMimage" src="images/HM_ALARMS.png" />
+</div>
+
+<div id="1DP" class="tabcontent">
+	<img id="TNmeanimage" src="images/1D_TN_MEAN.png" />
+	<img id="TNmedianimage" src="images/1D_TN_MEDIAN.png" />
+	<img id="TNstdimage" src="images/1D_TN_STD.png" />
+	<img id="TRmeanimage" src="images/1D_TR_MEAN.png" />
+	<img id="TRmedianimage" src="images/1D_TR_MEDIAN.png" />
+	<img id="TRstdimage" src="images/1D_TR_STD.png" />
+	<img id="TBmeanimage" src="images/1D_TB_MEAN.png" />
+	<img id="TBmedianimage" src="images/1D_TB_MEDIAN.png" />
+	<img id="TBstdimage" src="images/1D_TB_STD.png" />
+</div>
+
+<div id="2DP" class="tabcontent">
+	<img id="TNMMSimage" src="images/TN_PCA_KMEANS_K3_MMS.png" />
+	<img id="TNSWimage" src="images/TN_PCA_KMEANS_K3_SW.png" />
+	<img id="TRMMSimage" src="images/TR_PCA_KMEANS_K3_MMS.png" />
+	<img id="TRSWimage" src="images/TR_PCA_KMEANS_K3_SW.png" />
+	<img id="TBMMSimage" src="images/TB_PCA_KMEANS_K3_MMS.png" />
+	<!--
+	<img id="TBSWimage" src="images/TN_PCA_KMEANS_K3_SW.png" />
+	-->
+</div>
+
+<div id="TA" class="tabcontent">
+	<table>
+	<tr>
+	<td><img id="imageToSwap" src="images/RP_198_TvsTOO_TN.png" /></td>
+	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	<td>
+		<table class="blueTable">
+		<thead>
+		<tr>
+		<th>Operation<br>mean time</th>
+		<th>Operation<br>median time</th>
+		<th>Operation<br>std dev</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td id="td1">2.776</td>
+		<td id="td2">3</td>
+		<td id="td3">1.514</td>
+		</tr>
+		</tbody>
+		</table>
+		<br><br>
+		<table class="blueTable">
+		<thead>
+		<tr>
+		<th>No of operations</th>
+		<th>No of alarms</th>
+		<th>No of failures</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td id="td4">1789</td>
+		<td id="td5">964</td>
+		<td id="td6">1802</td>
+		</tr>
+		</tbody>
+		</table>
+	</td>
+	</tr>
+	</table>
+	<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Select Railway Point:  
+	<select id="dlist" onChange="swapImage()">
+	<option value="RP_198_TvsTOO_TN.png">Strathfield:ST535</option>
+	<option value="RP_278_TvsTOO_TN.png">Sydney:SY627</option>
+	<option value="RP_244_TvsTOO_TN.png">Sydney:SY203</option>
+	<option value="RP_242_TvsTOO_TN.png">Sydney:SY200</option>
+	<option value="RP_113_TvsTOO_TN.png">Lidcombe:ST654</option>
+	<option value="RP_166_TvsTOO_TN.png">NorthShore:GN51</option>
+	<option value="RP_272_TvsTOO_TN.png">Sydney:SY621</option>
+	<option value="RP_336_TvsTOO_TN.png">Lidcombe:ST644</option>
+	<option value="RP_101_TvsTOO_TN.png">Lidcombe:ST634</option>
+	<option value="RP_124_TvsTOO_TN.png">Lidcombe:ST690</option>
+	<option value="RP_107_TvsTOO_TN.png">Lidcombe:ST641</option>
+	<option value="RP_133_TvsTOO_TN.png">Lidcombe:ST702</option>
+	<option value="RP_255_TvsTOO_TN.png">Sydney:SY241</option>
+	<option value="RP_337_TvsTOO_TN.png">Lidcombe:ST649</option>
+	<option value="RP_310_TvsTOO_TN.png">Sydney:SY670</option>
+	<option value="RP_150_TvsTOO_TN.png">Lidcombe:ST871</option>
+	<option value="RP_35_TvsTOO_TN.png">Hornsby:B51</option>
+	<option value="RP_172_TvsTOO_TN.png">NorthSydney:NS600</option>
+	<option value="RP_245_TvsTOO_TN.png">Sydney:SY204</option>
+	<option value="RP_132_TvsTOO_TN.png">Lidcombe:ST701</option>
+	<option value="RP_109_TvsTOO_TN.png">Lidcombe:ST647</option>
+	<option value="RP_203_TvsTOO_TN.png">Strathfield:ST541</option>
+	<option value="RP_281_TvsTOO_TN.png">Sydney:SY630</option>
+	<option value="RP_114_TvsTOO_TN.png">Lidcombe:ST655</option>
+	<option value="RP_134_TvsTOO_TN.png">Lidcombe:ST703</option>
+	<option value="RP_156_TvsTOO_TN.png">Mountains:LN120</option>
+	<option value="RP_174_TvsTOO_TN.png">NorthSydney:NS602</option>
+	<option value="RP_327_TvsTOO_TN.png">Sydney:SY612</option>
+	<option value="RP_173_TvsTOO_TN.png">NorthSydney:NS601</option>
+	<option value="RP_164_TvsTOO_TN.png">Mountains:SD118</option>
+	<option value="RP_15_TvsTOO_TN.png">Granville:GE710</option>
+	<option value="RP_330_TvsTOO_TN.png">Lidcombe:ST692</option>
+	<option value="RP_307_TvsTOO_TN.png">Sydney:SY667</option>
+	<option value="RP_148_TvsTOO_TN.png">Lidcombe:ST863</option>
+	<option value="RP_308_TvsTOO_TN.png">Sydney:SY668</option>
+	<option value="RP_165_TvsTOO_TN.png">NorthShore:GN50</option>
+	<option value="RP_127_TvsTOO_TN.png">Lidcombe:ST695</option>
+	<option value="RP_163_TvsTOO_TN.png">Mountains:SD117</option>
+	<option value="RP_309_TvsTOO_TN.png">Sydney:SY669</option>
+	<option value="RP_238_TvsTOO_TN.png">Sydney:SY193</option>
+	<option value="RP_346_TvsTOO_TN.png">Hornsby:HR201</option>
+	<option value="RP_170_TvsTOO_TN.png">NorthShore:LD21</option>
+	<option value="RP_40_TvsTOO_TN.png">Hornsby:HR200</option>
+	<option value="RP_202_TvsTOO_TN.png">Strathfield:ST539</option>
+	<option value="RP_155_TvsTOO_TN.png">Mountains:LN119</option>
+	<option value="RP_279_TvsTOO_TN.png">Sydney:SY628</option>
+	<option value="RP_144_TvsTOO_TN.png">Lidcombe:ST720</option>
+	<option value="RP_146_TvsTOO_TN.png">Lidcombe:ST861</option>
+	<option value="RP_13_TvsTOO_TN.png">Granville:GE708</option>
+	<option value="RP_168_TvsTOO_TN.png">NorthShore:GN53</option>
+	<option value="RP_11_TvsTOO_TN.png">Granville:GE705</option>
+	<option value="RP_341_TvsTOO_TN.png">Hornsby:HR210</option>
+	<option value="RP_339_TvsTOO_TN.png">Sydney:SY195</option>
+	<option value="RP_200_TvsTOO_TN.png">Strathfield:ST537</option>
+	<option value="RP_249_TvsTOO_TN.png">Sydney:SY235</option>
+	<option value="RP_106_TvsTOO_TN.png">Lidcombe:ST640</option>
+	<option value="RP_117_TvsTOO_TN.png">Lidcombe:ST658</option>
+	<option value="RP_169_TvsTOO_TN.png">NorthShore:LD20</option>
+	<option value="RP_167_TvsTOO_TN.png">NorthShore:GN52</option>
+	<option value="RP_300_TvsTOO_TN.png">Sydney:SY660</option>
+	<option value="RP_332_TvsTOO_TN.png">Lidcombe:AN605</option>
+	<option value="RP_171_TvsTOO_TN.png">NorthSydney:NS599</option>
+	<option value="RP_54_TvsTOO_TN.png">Hornsby:HY523</option>
+	<option value="RP_176_TvsTOO_TN.png">NorthSydney:NS604</option>
+	<option value="RP_322_TvsTOO_TN.png">Mountains:SD113</option>
+	<option value="RP_157_TvsTOO_TN.png">Mountains:LN124</option>
+	<option value="RP_46_TvsTOO_TN.png">Hornsby:HY502</option>
+	<option value="RP_103_TvsTOO_TN.png">Lidcombe:ST637</option>
+	<option value="RP_140_TvsTOO_TN.png">Lidcombe:ST716</option>
+	<option value="RP_147_TvsTOO_TN.png">Lidcombe:ST862</option>
+	<option value="RP_8_TvsTOO_TN.png">Granville:GE700</option>
+	<option value="RP_345_TvsTOO_TN.png">Sydney:SY223</option>
+	<option value="RP_215_TvsTOO_TN.png">Strathfield:ST613</option>
+	<option value="RP_137_TvsTOO_TN.png">Lidcombe:ST709</option>
+	<option value="RP_195_TvsTOO_TN.png">Strathfield:ST529</option>
+	<option value="RP_243_TvsTOO_TN.png">Sydney:SY202</option>
+	<option value="RP_125_TvsTOO_TN.png">Lidcombe:ST693</option>
+	<option value="RP_239_TvsTOO_TN.png">Sydney:SY194</option>
+	<option value="RP_110_TvsTOO_TN.png">Lidcombe:ST651</option>
+	<option value="RP_196_TvsTOO_TN.png">Strathfield:ST530</option>
+	<option value="RP_141_TvsTOO_TN.png">Lidcombe:ST717</option>
+	<option value="RP_142_TvsTOO_TN.png">Lidcombe:ST718</option>
+	<option value="RP_120_TvsTOO_TN.png">Lidcombe:ST665</option>
+	<option value="RP_126_TvsTOO_TN.png">Lidcombe:ST694</option>
+	<option value="RP_237_TvsTOO_TN.png">Sydney:SY192</option>
+	<option value="RP_115_TvsTOO_TN.png">Lidcombe:ST656</option>
+	<option value="RP_175_TvsTOO_TN.png">NorthSydney:NS603</option>
+	<option value="RP_82_TvsTOO_TN.png">Lidcombe:AN608</option>
+	<option value="RP_335_TvsTOO_TN.png">Hornsby:HR203</option>
+	<option value="RP_321_TvsTOO_TN.png">Mountains:SD104</option>
+	<option value="RP_320_TvsTOO_TN.png">Lidcombe:AN637</option>
+	<option value="RP_315_TvsTOO_TN.png">Hornsby:HY543</option>
+	<option value="RP_36_TvsTOO_TN.png">Hornsby:B52</option>
+	<option value="RP_37_TvsTOO_TN.png">Hornsby:B53</option>
+	<option value="RP_305_TvsTOO_TN.png">Sydney:SY665</option>
+	<option value="RP_246_TvsTOO_TN.png">Sydney:SY211</option>
+	<option value="RP_53_TvsTOO_TN.png">Hornsby:HY521</option>
+	<option value="RP_284_TvsTOO_TN.png">Sydney:SY633</option>
+	<option value="RP_280_TvsTOO_TN.png">Sydney:SY629</option>
+	<option value="RP_59_TvsTOO_TN.png">Hornsby:HY530</option>
+	<option value="RP_61_TvsTOO_TN.png">Hornsby:HY533</option>
+	<option value="RP_268_TvsTOO_TN.png">Sydney:SY617</option>
+	<option value="RP_68_TvsTOO_TN.png">Hornsby:HY540</option>
+	<option value="RP_52_TvsTOO_TN.png">Hornsby:HY520</option>
+	<option value="RP_253_TvsTOO_TN.png">Sydney:SY239</option>
+	<option value="RP_252_TvsTOO_TN.png">Sydney:SY238</option>
+	<option value="RP_77_TvsTOO_TN.png">Hornsby:HY573</option>
+	<option value="RP_259_TvsTOO_TN.png">Sydney:SY247</option>
+	<option value="RP_251_TvsTOO_TN.png">Sydney:SY237</option>
+	<option value="RP_258_TvsTOO_TN.png">Sydney:SY244</option>
+	<option value="RP_257_TvsTOO_TN.png">Sydney:SY243</option>
+	<option value="RP_254_TvsTOO_TN.png">Sydney:SY240</option>
+	<option value="RP_136_TvsTOO_TN.png">Lidcombe:ST708</option>
+	<option value="RP_22_TvsTOO_TN.png">Granville:GE717</option>
+	<option value="RP_119_TvsTOO_TN.png">Lidcombe:ST664</option>
+	<option value="RP_31_TvsTOO_TN.png">Granville:GE750</option>
+	<option value="RP_149_TvsTOO_TN.png">Lidcombe:ST870</option>
+	<option value="RP_342_TvsTOO_TN.png">Lidcombe:ST689</option>
+	<option value="RP_264_TvsTOO_TN.png">Sydney:SY265</option>
+	<option value="RP_162_TvsTOO_TN.png">Mountains:SD102</option>
+	<option value="RP_151_TvsTOO_TN.png">Mountains:KT101</option>
+	<option value="RP_210_TvsTOO_TN.png">Strathfield:ST600</option>
+	<option value="RP_6_TvsTOO_TN.png">Granville:CL661</option>
+	<option value="RP_250_TvsTOO_TN.png">Sydney:SY236</option>
+	<option value="RP_10_TvsTOO_TN.png">Granville:GE702</option>
+	<option value="RP_21_TvsTOO_TN.png">Granville:GE716</option>
+	<option value="RP_17_TvsTOO_TN.png">Granville:GE712</option>
+	<option value="RP_16_TvsTOO_TN.png">Granville:GE711</option>
+	<option value="RP_12_TvsTOO_TN.png">Granville:GE706</option>
+	<option value="RP_14_TvsTOO_TN.png">Granville:GE709</option>
+	<option value="RP_329_TvsTOO_TN.png">Hornsby:HY6B</option>
+	<option value="RP_326_TvsTOO_TN.png">Sydney:SY250</option>
+	<option value="RP_325_TvsTOO_TN.png">Strathfield:ST584</option>
+	<option value="RP_338_TvsTOO_TN.png">Lidcombe:ST650</option>
+	<option value="RP_241_TvsTOO_TN.png">Sydney:SY198</option>
+	<option value="RP_261_TvsTOO_TN.png">Sydney:SY258</option>
+	<option value="RP_236_TvsTOO_TN.png">Sydney:SY184</option>
+	<option value="RP_263_TvsTOO_TN.png">Sydney:SY264</option>
+	<option value="RP_194_TvsTOO_TN.png">Strathfield:ST528</option>
+	<option value="RP_266_TvsTOO_TN.png">Sydney:SY615</option>
+	<option value="RP_191_TvsTOO_TN.png">Strathfield:EW102</option>
+	<option value="RP_188_TvsTOO_TN.png">Strathfield:EG108</option>
+	<option value="RP_256_TvsTOO_TN.png">Sydney:SY242</option>
+	<option value="RP_187_TvsTOO_TN.png">Strathfield:EG107</option>
+	<option value="RP_185_TvsTOO_TN.png">Strathfield:EG105</option>
+	<option value="RP_289_TvsTOO_TN.png">Sydney:SY643</option>
+	<option value="RP_290_TvsTOO_TN.png">Sydney:SY644</option>
+	<option value="RP_298_TvsTOO_TN.png">Sydney:SY658</option>
+	<option value="RP_299_TvsTOO_TN.png">Sydney:SY659</option>
+	<option value="RP_304_TvsTOO_TN.png">Sydney:SY664</option>
+	<option value="RP_223_TvsTOO_TN.png">Strathfield:WR101</option>
+	<option value="RP_312_TvsTOO_TN.png">Sydney:SY850</option>
+	<option value="RP_313_TvsTOO_TN.png">Hornsby:C66</option>
+	<option value="RP_262_TvsTOO_TN.png">Sydney:SY260</option>
+	<option value="RP_317_TvsTOO_TN.png">Hornsby:HY552</option>
+	<option value="RP_233_TvsTOO_TN.png">Sydney:SY174</option>
+	<option value="RP_350_TvsTOO_TN.png">Strathfield:EG113</option>
+	<option value="RP_48_TvsTOO_TN.png">Hornsby:HY515</option>
+	<option value="RP_38_TvsTOO_TN.png">Hornsby:C60</option>
+	<option value="RP_42_TvsTOO_TN.png">Hornsby:HR207</option>
+	<option value="RP_108_TvsTOO_TN.png">Lidcombe:ST646</option>
+	<option value="RP_104_TvsTOO_TN.png">Lidcombe:ST638</option>
+	<option value="RP_44_TvsTOO_TN.png">Hornsby:HY500</option>
+	<option value="RP_49_TvsTOO_TN.png">Hornsby:HY516</option>
+	<option value="RP_56_TvsTOO_TN.png">Hornsby:HY527</option>
+	<option value="RP_95_TvsTOO_TN.png">Lidcombe:AN638</option>
+	<option value="RP_63_TvsTOO_TN.png">Hornsby:HY535</option>
+	<option value="RP_64_TvsTOO_TN.png">Hornsby:HY536</option>
+	<option value="RP_92_TvsTOO_TN.png">Lidcombe:AN633</option>
+	<option value="RP_91_TvsTOO_TN.png">Lidcombe:AN632</option>
+	<option value="RP_65_TvsTOO_TN.png">Hornsby:HY537</option>
+	<option value="RP_89_TvsTOO_TN.png">Lidcombe:AN630</option>
+	<option value="RP_88_TvsTOO_TN.png">Lidcombe:AN629</option>
+	<option value="RP_66_TvsTOO_TN.png">Hornsby:HY538</option>
+	<option value="RP_67_TvsTOO_TN.png">Hornsby:HY539</option>
+	<option value="RP_85_TvsTOO_TN.png">Lidcombe:AN625</option>
+	<option value="RP_69_TvsTOO_TN.png">Hornsby:HY541</option>
+	<option value="RP_70_TvsTOO_TN.png">Hornsby:HY542</option>
+	<option value="RP_83_TvsTOO_TN.png">Lidcombe:AN609</option>
+	<option value="RP_112_TvsTOO_TN.png">Lidcombe:ST653</option>
+	<option value="RP_116_TvsTOO_TN.png">Lidcombe:ST657</option>
+	<option value="RP_73_TvsTOO_TN.png">Hornsby:HY569</option>
+	<option value="RP_143_TvsTOO_TN.png">Lidcombe:ST719</option>
+	<option value="RP_128_TvsTOO_TN.png">Lidcombe:ST696</option>
+	<option value="RP_138_TvsTOO_TN.png">Lidcombe:ST713</option>
+	<option value="RP_30_TvsTOO_TN.png">Granville:GE730</option>
+	<option value="RP_135_TvsTOO_TN.png">Lidcombe:ST704</option>
+	<option value="RP_129_TvsTOO_TN.png">Lidcombe:ST697</option>
+	<option value="RP_226_TvsTOO_TN.png">Sydney:SY156</option>
+	<option value="RP_154_TvsTOO_TN.png">Mountains:KT107</option>
+	<option value="RP_122_TvsTOO_TN.png">Lidcombe:ST687</option>
+	<option value="RP_287_TvsTOO_TN.png">Sydney:SY641</option>
+	<option value="RP_139_TvsTOO_TN.png">Lidcombe:ST714</option>
+	<option value="RP_23_TvsTOO_TN.png">Granville:GE720</option>
+	<option value="RP_217_TvsTOO_TN.png">Strathfield:ST617</option>
+	<option value="RP_218_TvsTOO_TN.png">Strathfield:ST618</option>
+	<option value="RP_123_TvsTOO_TN.png">Lidcombe:ST688</option>
+	<option value="RP_50_TvsTOO_TN.png">Hornsby:HY517</option>
+	<option value="RP_296_TvsTOO_TN.png">Sydney:SY656</option>
+	<option value="RP_205_TvsTOO_TN.png">Strathfield:ST553</option>
+	<option value="RP_102_TvsTOO_TN.png">Lidcombe:ST635</option>
+	<option value="RP_81_TvsTOO_TN.png">Lidcombe:AN604</option>
+	<option value="RP_121_TvsTOO_TN.png">Lidcombe:ST686</option>
+	<option value="RP_190_TvsTOO_TN.png">Strathfield:EG114</option>
+	<option value="RP_29_TvsTOO_TN.png">Granville:GE729</option>
+	<option value="RP_27_TvsTOO_TN.png">Granville:GE727</option>
+	<option value="RP_208_TvsTOO_TN.png">Strathfield:ST565</option>
+	<option value="RP_248_TvsTOO_TN.png">Sydney:SY234</option>
+	<option value="RP_207_TvsTOO_TN.png">Strathfield:ST563</option>
+	<option value="RP_72_TvsTOO_TN.png">Hornsby:HY564</option>
+	<option value="RP_344_TvsTOO_TN.png">Sydney:SY163</option>
+	<option value="RP_20_TvsTOO_TN.png">Granville:GE715</option>
+	<option value="RP_18_TvsTOO_TN.png">Granville:GE713</option>
+	<option value="RP_9_TvsTOO_TN.png">Granville:GE701</option>
+	<option value="RP_71_TvsTOO_TN.png">Hornsby:HY544</option>
+	<option value="RP_276_TvsTOO_TN.png">Sydney:SY625</option>
+	<option value="RP_274_TvsTOO_TN.png">Sydney:SY623</option>
+	<option value="RP_60_TvsTOO_TN.png">Hornsby:HY531</option>
+	<option value="RP_273_TvsTOO_TN.png">Sydney:SY622</option>
+	<option value="RP_269_TvsTOO_TN.png">Sydney:SY618</option>
+	<option value="RP_271_TvsTOO_TN.png">Sydney:SY620</option>
+	<option value="RP_348_TvsTOO_TN.png">Mountains:KT106</option>
+	<option value="RP_3_TvsTOO_TN.png">Ashfield:ST522</option>
+	<option value="RP_343_TvsTOO_TN.png">Sydney:SY154</option>
+	<option value="RP_265_TvsTOO_TN.png">Sydney:SY266</option>
+	<option value="RP_260_TvsTOO_TN.png">Sydney:SY249</option>
+	<option value="RP_58_TvsTOO_TN.png">Hornsby:HY529</option>
+	<option value="RP_319_TvsTOO_TN.png">Lidcombe:AN634</option>
+	<option value="RP_282_TvsTOO_TN.png">Sydney:SY631</option>
+	<option value="RP_318_TvsTOO_TN.png">Hornsby:HY560</option>
+	<option value="RP_316_TvsTOO_TN.png">Hornsby:HY551</option>
+	<option value="RP_314_TvsTOO_TN.png">Hornsby:HR202</option>
+	<option value="RP_324_TvsTOO_TN.png">Strathfield:RS52</option>
+	<option value="RP_311_TvsTOO_TN.png">Sydney:SY671</option>
+	<option value="RP_41_TvsTOO_TN.png">Hornsby:HR204</option>
+	<option value="RP_25_TvsTOO_TN.png">Granville:GE722</option>
+	<option value="RP_24_TvsTOO_TN.png">Granville:GE721</option>
+	<option value="RP_43_TvsTOO_TN.png">Hornsby:HR208</option>
+	<option value="RP_331_TvsTOO_TN.png">Lidcombe:AN603</option>
+	<option value="RP_306_TvsTOO_TN.png">Sydney:SY666</option>
+	<option value="RP_57_TvsTOO_TN.png">Hornsby:HY528</option>
+	<option value="RP_45_TvsTOO_TN.png">Hornsby:HY501</option>
+	<option value="RP_303_TvsTOO_TN.png">Sydney:SY663</option>
+	<option value="RP_302_TvsTOO_TN.png">Sydney:SY662</option>
+	<option value="RP_301_TvsTOO_TN.png">Sydney:SY661</option>
+	<option value="RP_294_TvsTOO_TN.png">Sydney:SY654</option>
+	<option value="RP_292_TvsTOO_TN.png">Sydney:SY649</option>
+	<option value="RP_51_TvsTOO_TN.png">Hornsby:HY518</option>
+	<option value="RP_55_TvsTOO_TN.png">Hornsby:HY526</option>
+	<option value="RP_288_TvsTOO_TN.png">Sydney:SY642</option>
+	<option value="RP_286_TvsTOO_TN.png">Sydney:SY636</option>
+	<option value="RP_285_TvsTOO_TN.png">Sydney:SY635</option>
+	<option value="RP_283_TvsTOO_TN.png">Sydney:SY632</option>
+	<option value="RP_47_TvsTOO_TN.png">Hornsby:HY508</option>
+	<option value="RP_158_TvsTOO_TN.png">Mountains:NJ102</option>
+	<option value="RP_76_TvsTOO_TN.png">Hornsby:HY572</option>
+	<option value="RP_75_TvsTOO_TN.png">Hornsby:HY571</option>
+	<option value="RP_216_TvsTOO_TN.png">Strathfield:ST616</option>
+	<option value="RP_96_TvsTOO_TN.png">Lidcombe:ST625</option>
+	<option value="RP_214_TvsTOO_TN.png">Strathfield:ST604</option>
+	<option value="RP_213_TvsTOO_TN.png">Strathfield:ST603</option>
+	<option value="RP_212_TvsTOO_TN.png">Strathfield:ST602</option>
+	<option value="RP_211_TvsTOO_TN.png">Strathfield:ST601</option>
+	<option value="RP_206_TvsTOO_TN.png">Strathfield:ST557</option>
+	<option value="RP_74_TvsTOO_TN.png">Hornsby:HY570</option>
+	<option value="RP_201_TvsTOO_TN.png">Strathfield:ST538</option>
+	<option value="RP_199_TvsTOO_TN.png">Strathfield:ST536</option>
+	<option value="RP_197_TvsTOO_TN.png">Strathfield:ST532</option>
+	<option value="RP_219_TvsTOO_TN.png">Strathfield:ST619</option>
+	<option value="RP_105_TvsTOO_TN.png">Lidcombe:ST639</option>
+	<option value="RP_189_TvsTOO_TN.png">Strathfield:EG109</option>
+	<option value="RP_186_TvsTOO_TN.png">Strathfield:EG106</option>
+	<option value="RP_118_TvsTOO_TN.png">Lidcombe:ST659</option>
+	<option value="RP_182_TvsTOO_TN.png">NorthSydney:NS610</option>
+	<option value="RP_180_TvsTOO_TN.png">NorthSydney:NS608</option>
+	<option value="RP_177_TvsTOO_TN.png">NorthSydney:NS605</option>
+	<option value="RP_349_TvsTOO_TN.png">Sydney:SY673</option>
+	<option value="RP_152_TvsTOO_TN.png">Mountains:KT102</option>
+	<option value="RP_153_TvsTOO_TN.png">Mountains:KT105</option>
+	<option value="RP_160_TvsTOO_TN.png">Mountains:NJ106</option>
+	<option value="RP_159_TvsTOO_TN.png">Mountains:NJ103</option>
+	<option value="RP_111_TvsTOO_TN.png">Lidcombe:ST652</option>
+	<option value="RP_220_TvsTOO_TN.png">Strathfield:TH51</option>
+	<option value="RP_99_TvsTOO_TN.png">Lidcombe:ST632</option>
+	<option value="RP_231_TvsTOO_TN.png">Sydney:SY162</option>
+	<option value="RP_93_TvsTOO_TN.png">Lidcombe:AN635</option>
+	<option value="RP_235_TvsTOO_TN.png">Sydney:SY183</option>
+	<option value="RP_84_TvsTOO_TN.png">Lidcombe:AN624</option>
+	<option value="RP_234_TvsTOO_TN.png">Sydney:SY182</option>
+	<option value="RP_94_TvsTOO_TN.png">Lidcombe:AN636</option>
+	<option value="RP_232_TvsTOO_TN.png">Sydney:SY166</option>
+	<option value="RP_240_TvsTOO_TN.png">Sydney:SY197</option>
+	<option value="RP_247_TvsTOO_TN.png">Sydney:SY224</option>
+	<option value="RP_230_TvsTOO_TN.png">Sydney:SY161</option>
+	<option value="RP_87_TvsTOO_TN.png">Lidcombe:AN628</option>
+	<option value="RP_80_TvsTOO_TN.png">Lidcombe:AN602</option>
+	<option value="RP_229_TvsTOO_TN.png">Sydney:SY160</option>
+	<option value="RP_78_TvsTOO_TN.png">Hornsby:HY574</option>
+	<option value="RP_227_TvsTOO_TN.png">Sydney:SY157</option>
+	<option value="RP_33_TvsTOO_TN.png">Granville:GE756</option>
+	<option value="RP_145_TvsTOO_TN.png">Lidcombe:ST721</option>
+	<option value="RP_328_TvsTOO_TN.png">Granville:GE726</option>
+	<option value="RP_34_TvsTOO_TN.png">Granville:GE757</option>
+	<option value="RP_267_TvsTOO_TN.png">Sydney:SY616</option>
+	<option value="RP_79_TvsTOO_TN.png">Hornsby:HY7B</option>
+	<option value="RP_28_TvsTOO_TN.png">Granville:GE728</option>
+	<option value="RP_179_TvsTOO_TN.png">NorthSydney:NS607</option>
+	<option value="RP_26_TvsTOO_TN.png">Granville:GE725</option>
+	<option value="RP_178_TvsTOO_TN.png">NorthSydney:NS606</option>
+	<option value="RP_86_TvsTOO_TN.png">Lidcombe:AN626</option>
+	<option value="RP_4_TvsTOO_TN.png">Granville:AY683</option>
+	<option value="RP_5_TvsTOO_TN.png">Granville:CL660</option>
+	<option value="RP_333_TvsTOO_TN.png">Sydney:SY647</option>
+	<option value="RP_2_TvsTOO_TN.png">Ashfield:ST521</option>
+	<option value="RP_334_TvsTOO_TN.png">Hornsby:C63</option>
+	<option value="RP_161_TvsTOO_TN.png">Mountains:RH50</option>
+	<option value="RP_131_TvsTOO_TN.png">Lidcombe:ST700</option>
+	<option value="RP_19_TvsTOO_TN.png">Granville:GE714</option>
+	<option value="RP_7_TvsTOO_TN.png">Granville:CL667</option>
+	<option value="RP_340_TvsTOO_TN.png">Granville:GE758</option>
+	<option value="RP_347_TvsTOO_TN.png">Strathfield:ST554</option>
+	<option value="RP_130_TvsTOO_TN.png">Lidcombe:ST699</option>
+	<option value="RP_221_TvsTOO_TN.png">Strathfield:TH52</option>
+	<option value="RP_181_TvsTOO_TN.png">NorthSydney:NS609</option>
+	<option value="RP_224_TvsTOO_TN.png">Strathfield:WR123</option>
+	<option value="RP_225_TvsTOO_TN.png">Sydney:SY152</option>
+	<option value="RP_228_TvsTOO_TN.png">Sydney:SY158</option>
+	<option value="RP_291_TvsTOO_TN.png">Sydney:SY648</option>
+	<option value="RP_62_TvsTOO_TN.png">Hornsby:HY534</option>
+	<option value="RP_293_TvsTOO_TN.png">Sydney:SY653</option>
+	<option value="RP_277_TvsTOO_TN.png">Sydney:SY626</option>
+	<option value="RP_295_TvsTOO_TN.png">Sydney:SY655</option>
+	<option value="RP_297_TvsTOO_TN.png">Sydney:SY657</option>
+	<option value="RP_97_TvsTOO_TN.png">Lidcombe:ST630</option>
+	<option value="RP_209_TvsTOO_TN.png">Strathfield:ST581</option>
+	<option value="RP_323_TvsTOO_TN.png">Strathfield:RS51</option>
+	<option value="RP_275_TvsTOO_TN.png">Sydney:SY624</option>
+	<option value="RP_98_TvsTOO_TN.png">Lidcombe:ST631</option>
+	<option value="RP_100_TvsTOO_TN.png">Lidcombe:ST633</option>
+	<option value="RP_270_TvsTOO_TN.png">Sydney:SY619</option>
+	<option value="RP_193_TvsTOO_TN.png">Strathfield:RS53</option>
+	<option value="RP_192_TvsTOO_TN.png">Strathfield:RS50</option>
+	<option value="RP_39_TvsTOO_TN.png">Hornsby:C64</option>
+	<option value="RP_90_TvsTOO_TN.png">Lidcombe:AN631</option>
+	<option value="RP_222_TvsTOO_TN.png">Strathfield:TH55</option>
+	<option value="RP_184_TvsTOO_TN.png">Strathfield:EG104</option>
+	<option value="RP_183_TvsTOO_TN.png">Strathfield:EG103</option>
+	<option value="RP_32_TvsTOO_TN.png">Granville:GE751</option>
+	<option value="RP_204_TvsTOO_TN.png">Strathfield:ST550</option>
+	<option value="RP_1_TvsTOO_TN.png">Ashfield:ST520</option>
+	</select>
+</div>
+
+<div id="TW" class="tabcontent">
+	<table>
+	<tr>
+	<td><img id="imageToSwap2" src="images/RP_198_TW_1_TN.png" /></td>
+	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	<td>
+	</td>
+	</tr>
+	</table>
+	<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Select Railway Point:  
+	<select id="dlist2" onChange="swapImage2()">
+	<option value="RP_198_">Strathfield:ST535</option>
+	<option value="RP_278_">Sydney:SY627</option>
+	<option value="RP_244_">Sydney:SY203</option>
+	<option value="RP_242_">Sydney:SY200</option>
+	<option value="RP_113_">Lidcombe:ST654</option>
+	<option value="RP_166_">NorthShore:GN51</option>
+	<option value="RP_272_">Sydney:SY621</option>
+	<option value="RP_336_">Lidcombe:ST644</option>
+	<option value="RP_101_">Lidcombe:ST634</option>
+	<option value="RP_124_">Lidcombe:ST690</option>
+	<option value="RP_107_">Lidcombe:ST641</option>
+	<option value="RP_133_">Lidcombe:ST702</option>
+	<option value="RP_255_">Sydney:SY241</option>
+	<option value="RP_337_">Lidcombe:ST649</option>
+	<option value="RP_310_">Sydney:SY670</option>
+	<option value="RP_150_">Lidcombe:ST871</option>
+	<option value="RP_35_">Hornsby:B51</option>
+	<option value="RP_172_">NorthSydney:NS600</option>
+	<option value="RP_245_">Sydney:SY204</option>
+	<option value="RP_132_">Lidcombe:ST701</option>
+	<option value="RP_109_">Lidcombe:ST647</option>
+	<option value="RP_203_">Strathfield:ST541</option>
+	<option value="RP_281_">Sydney:SY630</option>
+	<option value="RP_114_">Lidcombe:ST655</option>
+	<option value="RP_134_">Lidcombe:ST703</option>
+	<option value="RP_156_">Mountains:LN120</option>
+	<option value="RP_174_">NorthSydney:NS602</option>
+	<option value="RP_327_">Sydney:SY612</option>
+	<option value="RP_173_">NorthSydney:NS601</option>
+	<option value="RP_164_">Mountains:SD118</option>
+	<option value="RP_15_">Granville:GE710</option>
+	<option value="RP_330_">Lidcombe:ST692</option>
+	<option value="RP_307_">Sydney:SY667</option>
+	<option value="RP_148_">Lidcombe:ST863</option>
+	<option value="RP_308_">Sydney:SY668</option>
+	<option value="RP_165_">NorthShore:GN50</option>
+	<option value="RP_127_">Lidcombe:ST695</option>
+	<option value="RP_163_">Mountains:SD117</option>
+	<option value="RP_309_">Sydney:SY669</option>
+	<option value="RP_238_">Sydney:SY193</option>
+	<option value="RP_346_">Hornsby:HR201</option>
+	<option value="RP_170_">NorthShore:LD21</option>
+	<option value="RP_40_">Hornsby:HR200</option>
+	<option value="RP_202_">Strathfield:ST539</option>
+	<option value="RP_155_">Mountains:LN119</option>
+	<option value="RP_279_">Sydney:SY628</option>
+	<option value="RP_144_">Lidcombe:ST720</option>
+	<option value="RP_146_">Lidcombe:ST861</option>
+	<option value="RP_13_">Granville:GE708</option>
+	<option value="RP_168_">NorthShore:GN53</option>
+	<option value="RP_11_">Granville:GE705</option>
+	<option value="RP_341_">Hornsby:HR210</option>
+	<option value="RP_339_">Sydney:SY195</option>
+	<option value="RP_200_">Strathfield:ST537</option>
+	<option value="RP_249_">Sydney:SY235</option>
+	<option value="RP_106_">Lidcombe:ST640</option>
+	<option value="RP_117_">Lidcombe:ST658</option>
+	<option value="RP_169_">NorthShore:LD20</option>
+	<option value="RP_167_">NorthShore:GN52</option>
+	<option value="RP_300_">Sydney:SY660</option>
+	<option value="RP_332_">Lidcombe:AN605</option>
+	<option value="RP_171_">NorthSydney:NS599</option>
+	<option value="RP_54_">Hornsby:HY523</option>
+	<option value="RP_176_">NorthSydney:NS604</option>
+	<option value="RP_322_">Mountains:SD113</option>
+	<option value="RP_157_">Mountains:LN124</option>
+	<option value="RP_46_">Hornsby:HY502</option>
+	<option value="RP_103_">Lidcombe:ST637</option>
+	<option value="RP_140_">Lidcombe:ST716</option>
+	<option value="RP_147_">Lidcombe:ST862</option>
+	<option value="RP_8_">Granville:GE700</option>
+	<option value="RP_345_">Sydney:SY223</option>
+	<option value="RP_215_">Strathfield:ST613</option>
+	<option value="RP_137_">Lidcombe:ST709</option>
+	<option value="RP_195_">Strathfield:ST529</option>
+	<option value="RP_243_">Sydney:SY202</option>
+	<option value="RP_125_">Lidcombe:ST693</option>
+	<option value="RP_239_">Sydney:SY194</option>
+	<option value="RP_110_">Lidcombe:ST651</option>
+	<option value="RP_196_">Strathfield:ST530</option>
+	<option value="RP_141_">Lidcombe:ST717</option>
+	<option value="RP_142_">Lidcombe:ST718</option>
+	<option value="RP_120_">Lidcombe:ST665</option>
+	<option value="RP_126_">Lidcombe:ST694</option>
+	<option value="RP_237_">Sydney:SY192</option>
+	<option value="RP_115_">Lidcombe:ST656</option>
+	<option value="RP_175_">NorthSydney:NS603</option>
+	<option value="RP_82_">Lidcombe:AN608</option>
+	<option value="RP_335_">Hornsby:HR203</option>
+	<option value="RP_321_">Mountains:SD104</option>
+	<option value="RP_320_">Lidcombe:AN637</option>
+	<option value="RP_315_">Hornsby:HY543</option>
+	<option value="RP_36_">Hornsby:B52</option>
+	<option value="RP_37_">Hornsby:B53</option>
+	<option value="RP_305_">Sydney:SY665</option>
+	<option value="RP_246_">Sydney:SY211</option>
+	<option value="RP_53_">Hornsby:HY521</option>
+	<option value="RP_284_">Sydney:SY633</option>
+	<option value="RP_280_">Sydney:SY629</option>
+	<option value="RP_59_">Hornsby:HY530</option>
+	<option value="RP_61_">Hornsby:HY533</option>
+	<option value="RP_268_">Sydney:SY617</option>
+	<option value="RP_68_">Hornsby:HY540</option>
+	<option value="RP_52_">Hornsby:HY520</option>
+	<option value="RP_253_">Sydney:SY239</option>
+	<option value="RP_252_">Sydney:SY238</option>
+	<option value="RP_77_">Hornsby:HY573</option>
+	<option value="RP_259_">Sydney:SY247</option>
+	<option value="RP_251_">Sydney:SY237</option>
+	<option value="RP_258_">Sydney:SY244</option>
+	<option value="RP_257_">Sydney:SY243</option>
+	<option value="RP_254_">Sydney:SY240</option>
+	<option value="RP_136_">Lidcombe:ST708</option>
+	<option value="RP_22_">Granville:GE717</option>
+	<option value="RP_119_">Lidcombe:ST664</option>
+	<option value="RP_31_">Granville:GE750</option>
+	<option value="RP_149_">Lidcombe:ST870</option>
+	<option value="RP_342_">Lidcombe:ST689</option>
+	<option value="RP_264_">Sydney:SY265</option>
+	<option value="RP_162_">Mountains:SD102</option>
+	<option value="RP_151_">Mountains:KT101</option>
+	<option value="RP_210_">Strathfield:ST600</option>
+	<option value="RP_6_">Granville:CL661</option>
+	<option value="RP_250_">Sydney:SY236</option>
+	<option value="RP_10_">Granville:GE702</option>
+	<option value="RP_21_">Granville:GE716</option>
+	<option value="RP_17_">Granville:GE712</option>
+	<option value="RP_16_">Granville:GE711</option>
+	<option value="RP_12_">Granville:GE706</option>
+	<option value="RP_14_">Granville:GE709</option>
+	<option value="RP_329_">Hornsby:HY6B</option>
+	<option value="RP_326_">Sydney:SY250</option>
+	<option value="RP_325_">Strathfield:ST584</option>
+	<option value="RP_338_">Lidcombe:ST650</option>
+	<option value="RP_241_">Sydney:SY198</option>
+	<option value="RP_261_">Sydney:SY258</option>
+	<option value="RP_236_">Sydney:SY184</option>
+	<option value="RP_263_">Sydney:SY264</option>
+	<option value="RP_194_">Strathfield:ST528</option>
+	<option value="RP_266_">Sydney:SY615</option>
+	<option value="RP_191_">Strathfield:EW102</option>
+	<option value="RP_188_">Strathfield:EG108</option>
+	<option value="RP_256_">Sydney:SY242</option>
+	<option value="RP_187_">Strathfield:EG107</option>
+	<option value="RP_185_">Strathfield:EG105</option>
+	<option value="RP_289_">Sydney:SY643</option>
+	<option value="RP_290_">Sydney:SY644</option>
+	<option value="RP_298_">Sydney:SY658</option>
+	<option value="RP_299_">Sydney:SY659</option>
+	<option value="RP_304_">Sydney:SY664</option>
+	<option value="RP_223_">Strathfield:WR101</option>
+	<option value="RP_312_">Sydney:SY850</option>
+	<option value="RP_313_">Hornsby:C66</option>
+	<option value="RP_262_">Sydney:SY260</option>
+	<option value="RP_317_">Hornsby:HY552</option>
+	<option value="RP_233_">Sydney:SY174</option>
+	<option value="RP_350_">Strathfield:EG113</option>
+	<option value="RP_48_">Hornsby:HY515</option>
+	<option value="RP_38_">Hornsby:C60</option>
+	<option value="RP_42_">Hornsby:HR207</option>
+	<option value="RP_108_">Lidcombe:ST646</option>
+	<option value="RP_104_">Lidcombe:ST638</option>
+	<option value="RP_44_">Hornsby:HY500</option>
+	<option value="RP_49_">Hornsby:HY516</option>
+	<option value="RP_56_">Hornsby:HY527</option>
+	<option value="RP_95_">Lidcombe:AN638</option>
+	<option value="RP_63_">Hornsby:HY535</option>
+	<option value="RP_64_">Hornsby:HY536</option>
+	<option value="RP_92_">Lidcombe:AN633</option>
+	<option value="RP_91_">Lidcombe:AN632</option>
+	<option value="RP_65_">Hornsby:HY537</option>
+	<option value="RP_89_">Lidcombe:AN630</option>
+	<option value="RP_88_">Lidcombe:AN629</option>
+	<option value="RP_66_">Hornsby:HY538</option>
+	<option value="RP_67_">Hornsby:HY539</option>
+	<option value="RP_85_">Lidcombe:AN625</option>
+	<option value="RP_69_">Hornsby:HY541</option>
+	<option value="RP_70_">Hornsby:HY542</option>
+	<option value="RP_83_">Lidcombe:AN609</option>
+	<option value="RP_112_">Lidcombe:ST653</option>
+	<option value="RP_116_">Lidcombe:ST657</option>
+	<option value="RP_73_">Hornsby:HY569</option>
+	<option value="RP_143_">Lidcombe:ST719</option>
+	<option value="RP_128_">Lidcombe:ST696</option>
+	<option value="RP_138_">Lidcombe:ST713</option>
+	<option value="RP_30_">Granville:GE730</option>
+	<option value="RP_135_">Lidcombe:ST704</option>
+	<option value="RP_129_">Lidcombe:ST697</option>
+	<option value="RP_226_">Sydney:SY156</option>
+	<option value="RP_154_">Mountains:KT107</option>
+	<option value="RP_122_">Lidcombe:ST687</option>
+	<option value="RP_287_">Sydney:SY641</option>
+	<option value="RP_139_">Lidcombe:ST714</option>
+	<option value="RP_23_">Granville:GE720</option>
+	<option value="RP_217_">Strathfield:ST617</option>
+	<option value="RP_218_">Strathfield:ST618</option>
+	<option value="RP_123_">Lidcombe:ST688</option>
+	<option value="RP_50_">Hornsby:HY517</option>
+	<option value="RP_296_">Sydney:SY656</option>
+	<option value="RP_205_">Strathfield:ST553</option>
+	<option value="RP_102_">Lidcombe:ST635</option>
+	<option value="RP_81_">Lidcombe:AN604</option>
+	<option value="RP_121_">Lidcombe:ST686</option>
+	<option value="RP_190_">Strathfield:EG114</option>
+	<option value="RP_29_">Granville:GE729</option>
+	<option value="RP_27_">Granville:GE727</option>
+	<option value="RP_208_">Strathfield:ST565</option>
+	<option value="RP_248_">Sydney:SY234</option>
+	<option value="RP_207_">Strathfield:ST563</option>
+	<option value="RP_72_">Hornsby:HY564</option>
+	<option value="RP_344_">Sydney:SY163</option>
+	<option value="RP_20_">Granville:GE715</option>
+	<option value="RP_18_">Granville:GE713</option>
+	<option value="RP_9_">Granville:GE701</option>
+	<option value="RP_71_">Hornsby:HY544</option>
+	<option value="RP_276_">Sydney:SY625</option>
+	<option value="RP_274_">Sydney:SY623</option>
+	<option value="RP_60_">Hornsby:HY531</option>
+	<option value="RP_273_">Sydney:SY622</option>
+	<option value="RP_269_">Sydney:SY618</option>
+	<option value="RP_271_">Sydney:SY620</option>
+	<option value="RP_348_">Mountains:KT106</option>
+	<option value="RP_3_">Ashfield:ST522</option>
+	<option value="RP_343_">Sydney:SY154</option>
+	<option value="RP_265_">Sydney:SY266</option>
+	<option value="RP_260_">Sydney:SY249</option>
+	<option value="RP_58_">Hornsby:HY529</option>
+	<option value="RP_319_">Lidcombe:AN634</option>
+	<option value="RP_282_">Sydney:SY631</option>
+	<option value="RP_318_">Hornsby:HY560</option>
+	<option value="RP_316_">Hornsby:HY551</option>
+	<option value="RP_314_">Hornsby:HR202</option>
+	<option value="RP_324_">Strathfield:RS52</option>
+	<option value="RP_311_">Sydney:SY671</option>
+	<option value="RP_41_">Hornsby:HR204</option>
+	<option value="RP_25_">Granville:GE722</option>
+	<option value="RP_24_">Granville:GE721</option>
+	<option value="RP_43_">Hornsby:HR208</option>
+	<option value="RP_331_">Lidcombe:AN603</option>
+	<option value="RP_306_">Sydney:SY666</option>
+	<option value="RP_57_">Hornsby:HY528</option>
+	<option value="RP_45_">Hornsby:HY501</option>
+	<option value="RP_303_">Sydney:SY663</option>
+	<option value="RP_302_">Sydney:SY662</option>
+	<option value="RP_301_">Sydney:SY661</option>
+	<option value="RP_294_">Sydney:SY654</option>
+	<option value="RP_292_">Sydney:SY649</option>
+	<option value="RP_51_">Hornsby:HY518</option>
+	<option value="RP_55_">Hornsby:HY526</option>
+	<option value="RP_288_">Sydney:SY642</option>
+	<option value="RP_286_">Sydney:SY636</option>
+	<option value="RP_285_">Sydney:SY635</option>
+	<option value="RP_283_">Sydney:SY632</option>
+	<option value="RP_47_">Hornsby:HY508</option>
+	<option value="RP_158_">Mountains:NJ102</option>
+	<option value="RP_76_">Hornsby:HY572</option>
+	<option value="RP_75_">Hornsby:HY571</option>
+	<option value="RP_216_">Strathfield:ST616</option>
+	<option value="RP_96_">Lidcombe:ST625</option>
+	<option value="RP_214_">Strathfield:ST604</option>
+	<option value="RP_213_">Strathfield:ST603</option>
+	<option value="RP_212_">Strathfield:ST602</option>
+	<option value="RP_211_">Strathfield:ST601</option>
+	<option value="RP_206_">Strathfield:ST557</option>
+	<option value="RP_74_">Hornsby:HY570</option>
+	<option value="RP_201_">Strathfield:ST538</option>
+	<option value="RP_199_">Strathfield:ST536</option>
+	<option value="RP_197_">Strathfield:ST532</option>
+	<option value="RP_219_">Strathfield:ST619</option>
+	<option value="RP_105_">Lidcombe:ST639</option>
+	<option value="RP_189_">Strathfield:EG109</option>
+	<option value="RP_186_">Strathfield:EG106</option>
+	<option value="RP_118_">Lidcombe:ST659</option>
+	<option value="RP_182_">NorthSydney:NS610</option>
+	<option value="RP_180_">NorthSydney:NS608</option>
+	<option value="RP_177_">NorthSydney:NS605</option>
+	<option value="RP_349_">Sydney:SY673</option>
+	<option value="RP_152_">Mountains:KT102</option>
+	<option value="RP_153_">Mountains:KT105</option>
+	<option value="RP_160_">Mountains:NJ106</option>
+	<option value="RP_159_">Mountains:NJ103</option>
+	<option value="RP_111_">Lidcombe:ST652</option>
+	<option value="RP_220_">Strathfield:TH51</option>
+	<option value="RP_99_">Lidcombe:ST632</option>
+	<option value="RP_231_">Sydney:SY162</option>
+	<option value="RP_93_">Lidcombe:AN635</option>
+	<option value="RP_235_">Sydney:SY183</option>
+	<option value="RP_84_">Lidcombe:AN624</option>
+	<option value="RP_234_">Sydney:SY182</option>
+	<option value="RP_94_">Lidcombe:AN636</option>
+	<option value="RP_232_">Sydney:SY166</option>
+	<option value="RP_240_">Sydney:SY197</option>
+	<option value="RP_247_">Sydney:SY224</option>
+	<option value="RP_230_">Sydney:SY161</option>
+	<option value="RP_87_">Lidcombe:AN628</option>
+	<option value="RP_80_">Lidcombe:AN602</option>
+	<option value="RP_229_">Sydney:SY160</option>
+	<option value="RP_78_">Hornsby:HY574</option>
+	<option value="RP_227_">Sydney:SY157</option>
+	<option value="RP_33_">Granville:GE756</option>
+	<option value="RP_145_">Lidcombe:ST721</option>
+	<option value="RP_328_">Granville:GE726</option>
+	<option value="RP_34_">Granville:GE757</option>
+	<option value="RP_267_">Sydney:SY616</option>
+	<option value="RP_79_">Hornsby:HY7B</option>
+	<option value="RP_28_">Granville:GE728</option>
+	<option value="RP_179_">NorthSydney:NS607</option>
+	<option value="RP_26_">Granville:GE725</option>
+	<option value="RP_178_">NorthSydney:NS606</option>
+	<option value="RP_86_">Lidcombe:AN626</option>
+	<option value="RP_4_">Granville:AY683</option>
+	<option value="RP_5_">Granville:CL660</option>
+	<option value="RP_333_">Sydney:SY647</option>
+	<option value="RP_2_">Ashfield:ST521</option>
+	<option value="RP_334_">Hornsby:C63</option>
+	<option value="RP_161_">Mountains:RH50</option>
+	<option value="RP_131_">Lidcombe:ST700</option>
+	<option value="RP_19_">Granville:GE714</option>
+	<option value="RP_7_">Granville:CL667</option>
+	<option value="RP_340_">Granville:GE758</option>
+	<option value="RP_347_">Strathfield:ST554</option>
+	<option value="RP_130_">Lidcombe:ST699</option>
+	<option value="RP_221_">Strathfield:TH52</option>
+	<option value="RP_181_">NorthSydney:NS609</option>
+	<option value="RP_224_">Strathfield:WR123</option>
+	<option value="RP_225_">Sydney:SY152</option>
+	<option value="RP_228_">Sydney:SY158</option>
+	<option value="RP_291_">Sydney:SY648</option>
+	<option value="RP_62_">Hornsby:HY534</option>
+	<option value="RP_293_">Sydney:SY653</option>
+	<option value="RP_277_">Sydney:SY626</option>
+	<option value="RP_295_">Sydney:SY655</option>
+	<option value="RP_297_">Sydney:SY657</option>
+	<option value="RP_97_">Lidcombe:ST630</option>
+	<option value="RP_209_">Strathfield:ST581</option>
+	<option value="RP_323_">Strathfield:RS51</option>
+	<option value="RP_275_">Sydney:SY624</option>
+	<option value="RP_98_">Lidcombe:ST631</option>
+	<option value="RP_100_">Lidcombe:ST633</option>
+	<option value="RP_270_">Sydney:SY619</option>
+	<option value="RP_193_">Strathfield:RS53</option>
+	<option value="RP_192_">Strathfield:RS50</option>
+	<option value="RP_39_">Hornsby:C64</option>
+	<option value="RP_90_">Lidcombe:AN631</option>
+	<option value="RP_222_">Strathfield:TH55</option>
+	<option value="RP_184_">Strathfield:EG104</option>
+	<option value="RP_183_">Strathfield:EG103</option>
+	<option value="RP_32_">Granville:GE751</option>
+	<option value="RP_204_">Strathfield:ST550</option>
+	<option value="RP_1_">Ashfield:ST520</option>
+	</select>
+
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Select time-window:  
+	<select id="dlist3" onChange="swapImage2()">
+	<option value="1">5 minutes</option>
+	<option value="2">10 minutes</option>
+	<option value="3">30 minutes</option>
+	<option value="4">1 hour</option>
+	<option value="5">6 hours</option>
+	<option value="6">12 hours</option>
+	<option value="7">1 day</option>
+	<option value="8">3 days</option>
+	<option value="9">5 days</option>
+	<option value="10">10 days</option>
+	</select>
+</div>
+
+<script>
+no_alarms = [964, 69, 65, 58, 51, 47, 44, 44, 40, 39, 38, 38, 37, 37, 36, 33, 31, 31, 31, 29, 29, 28, 28, 28, 27, 27, 26, 24, 24, 24, 23, 23, 23, 22, 22, 21, 21, 20, 20, 20, 20, 19, 19, 19, 19, 19, 18, 18, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 15, 15, 15, 14, 14, 14, 13, 13, 13, 13, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 10, 10, 10, 10, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+no_failures = [1802, 68, 110, 63, 29, 47, 28, 36, 34, 30, 30, 46, 20, 28, 20, 26, 24, 20, 21, 28, 18, 14, 14, 14, 22, 17, 199, 12, 13, 16, 28, 15, 12, 17, 12, 15, 17, 13, 10, 10, 16, 10, 10, 11, 12, 12, 20, 13, 21, 21, 18, 11, 8, 8, 8, 12, 8, 8, 10, 18, 8, 10, 9, 119, 12, 9, 18, 13, 15, 10, 12, 14, 11, 8, 14, 165, 14, 11, 6, 6, 12, 7, 6, 30, 6, 17, 62, 9, 6, 10, 6, 6, 7, 8, 6, 12, 8, 6, 6, 8, 7, 6, 8, 6, 6, 6, 41, 6, 11, 16, 6, 6, 12, 10, 6, 10, 8, 9, 8, 9, 18, 11, 16, 14, 10, 8, 14, 15, 10, 10, 8, 4, 8, 4, 15, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 8, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 7, 4, 4, 4, 4, 4, 7, 4, 7, 4, 21, 5, 4, 4, 5, 6, 4, 5, 5, 8, 4, 5, 6, 6, 4, 4, 10, 10, 6, 8, 8, 18, 4, 6, 6, 7, 6, 6, 4, 8, 5, 4, 7, 7, 6, 4, 5, 4, 6, 4, 5, 8, 6, 5, 3, 4, 6, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+no_sw = [1789, 1094, 232, 220, 239, 1338, 78, 151, 592, 2901, 191, 838, 952, 60, 489, 333, 1137, 149, 573, 569, 65, 1689, 120, 335, 83, 23, 230, 192, 324, 23, 2035, 20, 463, 25, 224, 1250, 553, 126, 554, 346, 16, 720, 9, 176, 30, 478, 197, 181, 2382, 933, 472, 20, 13, 156, 1266, 216, 277, 722, 1132, 265, 120, 33, 982, 107, 30, 28, 223, 110, 130, 200, 153, 11, 396, 1727, 79, 830, 177, 834, 228, 1218, 225, 235, 112, 172, 708, 469, 180, 377, 4, 32, 12, 32, 1076, 955, 166, 205, 798, 619, 555, 460, 433, 61, 198, 630, 873, 435, 46, 1458, 415, 668, 472, 613, 181, 903, 157, 64, 312, 11, 921, 56, 130, 1485, 72, 121, 178, 919, 134, 141, 151, 1923, 11, 10, 5, 136, 818, 45, 60, 718, 79, 34, 23, 43, 615, 576, 121, 145, 91, 348, 451, 149, 1021, 346, 17, 59, 29, 79, 2, 537, 129, 4, 283, 115, 1475, 147, 638, 137, 160, 161, 162, 144, 109, 333, 95, 77, 72, 39, 913, 1102, 239, 708, 230, 156, 189, 185, 376, 1292, 94, 146, 418, 48, 299, 254, 191, 932, 198, 874, 294, 647, 71, 710, 401, 119, 19, 637, 226, 213, 68, 392, 145, 982, 28, 888, 136, 170, 179, 206, 105, 277, 129, 44, 2364, 1, 207, 11, 552, 895, 108, 28, 246, 67, 15, 7, 38, 68, 26, 1030, 61, 26, 113, 53, 539, 1231, 127, 77, 537, 177, 570, 631, 658, 130, 171, 48, 626, 124, 28, 186, 121, 325, 230, 979, 992, 979, 1195, 297, 141, 320, 233, 1799, 146, 234, 894, 576, 92, 37, 551, 315, 5, 45, 88, 28, 53, 370, 40, 265, 171, 155, 639, 38, 911, 224, 434, 467, 531, 146, 43, 105, 529, 1052, 462, 899, 124, 6, 891, 33, 290, 1312, 163, 624, 314, 38, 543, 70, 8, 130, 12, 126, 246, 129, 61, 13, 7, 263, 741, 288, 1172, 387, 264, 517, 424, 573, 1949, 45, 79, 154, 142, 35, 155, 158, 156, 39, 590, 341, 139, 164, 39, 629, 803, 128, 1534, 124];
+
+mean_t = [2.776, 3.007, 3.103, 2.309, 1.51 , 32.743, 2.859, 11.073, 2.78 , 4.656, 11.822, 4.704, 3.585, 6.033, 2.483, 5.856, 4.303, 6.564, 2.771, 4.592, 6.262, 2.306, 2.475, 1.337, 4.819, 6.565, 11.548, 2.458, 6.559, 6.696, 6.405, 5.75 , 2.769, 6, 3.366, 7.457, 4.533, 6.738, 2.874, 2.48 , 6.875, 6.896, 6.556, 3.108, 6.467, 3.159, 4.909, 5.895, 6.636, 7.555, 5.877, 7.2 , 4.846, 3.564, 4.886, 10.736, 2.39 , 6.954, 7.87 , 1.883, 7.917, 6.576, 4.622, 6.57 , 6.767, 6.393, 7.197, 9.845, 5.023, 5.535, 6.817, 7.545, 2.975, 4.376, 5.772, 2.107, 3.373, 2.983, 1.987, 2.554, 4.573, 4.179, 4.536, 3.395, 3.322, 1.512, 9.706, 6.387, 7.5 , 6.75 , 7.333, 6.375, 4.266, 4.361, 2.301, 3.8 , 4.6 , 2.326, 2.256, 4.665, 3.695, 2.836, 7.621, 6.059, 4.561, 3.717, 6.239, 3.353, 3.405, 2.409, 3.525, 4.163, 4.365, 6.803, 4.535, 6.516, 5.506, 5.818, 2.921, 6.768, 6.277, 2.564, 6.125, 5.107, 9.466, 6.498, 16.754, 6.645, 5.854, 6.636, 6.455, 2.9 , 6, 5.449, 2.568, 5.4 , 4.1 , 3.331, 8.278, 3.088, 6.609, 12.558, 3.153, 12.569, 12.702, 3.855, 3.505, 4.905, 7.06 , 2.047, 4.317, 4.616, 5.941, 2.678, 6.379, 5.557, 12.5 , 3.803, 4.419, 8, 6.657, 6.157, 6.046, 3.925, 6.487, 4.942, 6.087, 6.019, 5.364, 5.5 , 5.982, 4.694, 5.379, 6.039, 5.958, 6.949, 6.916, 7.218, 6.029, 2.25 , 2.717, 7.192, 4.677, 4.649, 4.747, 5.529, 4.777, 4.507, 3.16 , 6.396, 4.709, 3.173, 4.429, 5.344, 2.798, 4.037, 4.503, 3.802, 3.197, 4.838, 4.127, 6.706, 4.526, 12.458, 5.602, 5.347, 3.985, 4.181, 4.2 , 6.943, 3.643, 6.519, 6.522, 6.771, 4.313, 2.869, 2.467, 3.819, 2.341, 2.795, 2.19 , 6, 2.995, 2.636, 2.683, 4.256, 4.667, 4.429, 2.484, 7.164, 6.733, 7.429, 4.658, 3.368, 6.346, 5.432, 5.41 , 6.038, 4.761, 2.245, 4.651, 6.869, 1.921, 2.883, 2.289, 2.107, 2.912, 3.794, 4.673, 3.377, 3.462, 2.159, 2.381, 6.919, 6.107, 6.366, 6.008, 2.462, 2.861, 3.312, 3.239, 2.874, 2.669, 4.7 , 6.369, 2.7 , 2.665, 2.829, 3.644, 7.868, 12.488, 12.63 , 2.543, 6.649, 3.312, 2.473, 2.8 , 6.089, 6.33 , 6.107, 6.151, 1.141, 4.525, 3.642, 3.906, 4.394, 3.79 , 6.263, 4.182, 4.183, 3.378, 3.441, 2.004, 2.432, 4.651, 4.714, 3.064, 6.394, 2.552, 6.691, 4.5 , 4.167, 6.646, 2.606, 6.755, 5.496, 2.626, 5.38 , 2.481, 4.263, 3.785, 7.843, 2.75 , 2.791, 4.667, 5.937, 3.488, 6.612, 5.705, 6.692, 4.714, 2.863, 4.896, 4.76 , 5.799, 2.545, 2.806, 2.888, 4.318, 2.923, 3.53 , 2.467, 3.051, 3.292, 5.852, 5.486, 2.161, 4.158, 4.096, 4.154, 5.625, 4.548, 4.799, 6.006, 4.564, 12.668, 12.828, 6.805, 4.678, 2.798]; 
+
+median_t = [3, 3, 3, 2, 2, 7, 3, 11, 3, 5, 12, 5, 4, 6, 2, 6, 4, 7, 3, 5, 6, 2, 2, 1, 5, 7, 7, 2, 7, 7, 6, 5, 3, 5, 3, 7, 4, 7, 3, 2, 7, 7, 7, 3, 6, 3, 5, 6, 7, 7, 6, 7, 5, 4, 5, 11, 2, 7, 8, 2, 8, 7, 5, 7, 7, 6, 7, 10, 5, 6, 7, 5, 3, 4, 6, 2, 3, 3, 2, 3, 5, 4, 5, 3, 3, 2, 10, 6, 7.5, 7, 7, 6, 4, 4, 2, 4, 5, 2, 2, 5, 4, 3, 7, 6, 5, 4, 6, 3, 3, 2, 4, 4, 4, 6, 4, 7, 5, 4, 3, 7, 6, 3, 6, 5, 6, 6, 7, 7, 6, 7, 6, 3, 6, 5, 3, 5, 4, 3, 8, 3, 7, 13, 3, 13, 13, 4, 4, 5, 7, 2, 4, 5, 6, 3, 6, 6, 12.5, 4, 4, 8, 7, 6, 6, 4, 7, 5, 6, 6, 5, 5.5, 6, 5, 5, 6, 6, 6, 7, 7, 6, 2, 3, 7, 5, 5, 5, 6, 5, 5, 3, 6, 5, 3, 4, 5, 3, 4, 5, 4, 3, 5, 4, 7, 5, 12, 6, 5, 4, 4, 4, 6, 4, 7, 7, 7, 4, 3, 2, 4, 2, 3, 2, 6, 3, 3, 3, 4, 5, 4, 2, 7, 7, 7, 5, 3, 6, 5, 5, 6, 5, 2, 5, 7, 2, 3, 2, 2, 3, 4, 5, 3, 3, 2, 2, 7, 6, 6, 6, 2, 3, 3, 3, 3, 3, 5, 6, 3, 3, 3, 4, 8, 12, 12, 3, 7, 3, 2, 3, 6, 6, 6, 6, 1, 5, 4, 4, 4, 4, 6, 4, 4, 3, 3, 2, 2, 5, 5, 3, 6, 3, 7, 4.5, 4, 7, 3, 7, 5, 3, 5, 2, 4, 4, 8, 3, 3, 5, 6, 3, 7, 6, 7, 5, 3, 5, 5, 6, 3, 3, 3, 4, 3, 4, 2, 3, 3, 6, 5, 2, 4, 4, 4, 6, 5, 5, 6, 5, 13, 13, 7, 5, 3]; 
+
+std_t = [1.514, 7.125, 2.845, 5.754, 0.5 , 938.062, 0.445, 0.642, 0.725, 0.475, 0.48 , 0.456, 0.493, 0.314, 0.5 , 0.414, 0.459, 0.496, 0.42 , 0.491, 0.473, 0.759, 0.499, 0.473, 1.851, 0.496, 74.903, 0.498, 0.538, 0.46 , 0.511, 5.356, 0.422, 3.111, 0.482, 0.563, 0.933, 0.44 , 0.332, 0.5 , 0.484, 0.344, 0.497, 0.345, 0.499, 0.366, 3.041, 0.427, 0.5 , 16.103, 0.341, 0.6 , 0.361, 0.496, 0.33 , 0.623, 0.488, 0.364, 0.435, 0.333, 0.42 , 0.494, 0.485, 0.495, 0.423, 0.488, 0.43 , 0.621, 2.816, 0.547, 0.477, 8.106, 0.283, 0.484, 0.502, 0.313, 0.484, 0.259, 0.288, 0.497, 0.495, 0.383, 0.516, 0.489, 0.467, 0.5 , 0.794, 0.493, 0.5 , 0.433, 0.471, 0.484, 0.444, 0.48 , 0.459, 0.4 , 0.49 , 0.469, 0.436, 0.476, 0.47 , 0.37 , 6.241, 0.496, 0.496, 0.45 , 0.519, 0.478, 0.491, 0.492, 0.499, 0.387, 0.481, 9.276, 3.284, 0.5 , 1.587, 4.509, 0.308, 0.422, 0.447, 0.496, 0.47 , 0.31 , 40.181, 0.5 , 117.429, 0.478, 0.353, 0.504, 0.498, 0.3 , 0, 0.497, 0.495, 0.49 , 0.3 , 0.471, 0.448, 0.284, 0.488, 0.497, 0.36 , 0.594, 0.57 , 2.969, 0.5 , 0.312, 0.381, 0.241, 0.465, 0.486, 0.235, 0.467, 0.611, 0.522, 0.5 , 0.403, 0.493, 0, 0.594, 0.693, 0.512, 0.468, 0.605, 0.314, 0.492, 0.528, 0.481, 0.5 , 0.358, 1.113, 0.485, 0.521, 0.455, 3.289, 0.578, 0.428, 1.201, 0.433, 0.45 , 0.44 , 1.983, 0.477, 0.435, 0.499, 2.053, 0.5 , 1.482, 0.489, 1.378, 0.378, 0.495, 0.48 , 0.402, 0.326, 0.5 , 0.402, 0.398, 0.983, 0.369, 0.54 , 0.499, 0.558, 0.49 , 0.532, 1.883, 1.357, 0.449, 15.242, 0.479, 0.5 , 0.514, 0.543, 0.498, 0.352, 0.499, 0.394, 0.474, 0.403, 0.393, 0, 0.347, 0.481, 0.465, 0.436, 0.471, 0.495, 0.5 , 0.37 , 0.573, 0.495, 0.474, 0.482, 0.551, 0.507, 0.492, 0.437, 0.447, 0.43 , 0.484, 0.468, 0.269, 0.321, 0.453, 0.327, 0.334, 0.408, 0.469, 0.485, 1.534, 0.737, 2.791, 0.502, 0.309, 0.573, 0.472, 0.499, 0.346, 0.478, 0.431, 0.335, 0.471, 0.458, 0.482, 0.458, 0.472, 0.402, 0.479, 0.351, 0.551, 3.65 , 0.498, 0.625, 0.471, 0.499, 0.4 , 0.285, 0.47 , 0.409, 0.358, 0.37 , 0.499, 0.48 , 0.408, 0.489, 0.407, 0.44 , 0.392, 0.398, 0.485, 0.497, 0.384, 0.495, 0.477, 0.452, 0.443, 0.495, 0.497, 0.462, 0.5 , 0.373, 0.478, 0.489, 0.446, 0.503, 0.597, 0.492, 0.5 , 0.44 , 0.441, 0.749, 0.433, 1.097, 0.471, 0.327, 0.5 , 0.487, 0.456, 0.462, 0.452, 0.344, 0.31 , 0.466, 0.401, 0.498, 0.532, 0.333, 0.476, 0.303, 0.499, 0.499, 0.271, 0.455, 0.355, 0.5 , 0.368, 0.398, 0.389, 0.361, 0.484, 0.498, 0.401, 0.374, 0.496, 0.563, 0.587, 0.531, 0.469, 0.401]; 
+
+
+function swapImage(){
+	var image = document.getElementById("imageToSwap");
+	var dropd = document.getElementById("dlist");
+	image.src = "images/"+dropd.value;	
+    document.getElementById('td1').innerHTML = mean_t[dropd.selectedIndex];
+    document.getElementById('td2').innerHTML = median_t[dropd.selectedIndex];
+    document.getElementById('td3').innerHTML = std_t[dropd.selectedIndex];
+    document.getElementById('td4').innerHTML = no_sw[dropd.selectedIndex];
+    document.getElementById('td5').innerHTML = no_alarms[dropd.selectedIndex];
+    document.getElementById('td6').innerHTML = no_failures[dropd.selectedIndex];
+};
+
+function swapImage2(){
+	var image2 = document.getElementById("imageToSwap2");
+	var dropd2 = document.getElementById("dlist2");
+	var dropd3 = document.getElementById("dlist3");
+	image2.src = "images/"+dropd2.value+"TW_"+dropd3.value+"_TN.png";	
+};
+
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+document.getElementById("defaultOpen").click();
+</script>
+   
+</body>
+</html> 
